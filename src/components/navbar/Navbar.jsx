@@ -114,7 +114,7 @@ export default function Navbar() {
                             <Button
                                 key={page}
                                 component={RouterLink}
-                                to={`/${page.toLowerCase()}`}
+                                to={page == "Home"? `/`:`/${page.toLowerCase()}`}
                                 onClick={handleCloseNavMenu}
                                 sx={{
                                     my: 2,
@@ -166,7 +166,7 @@ export default function Navbar() {
                                     justifyContent: "center",
                                 }}
                             >
-                                Register
+                                Create Account
                             </Link>
                         </Stack>
                     </Box>
