@@ -4,6 +4,8 @@ import Home from "./pages/home/Home";
 import Register from "./pages/register/Register";
 import Login from "./pages/login/Login";
 import Cart from "./pages/cart/Cart";
+import ForgetPassword from "./pages/forget-password/ForgetPassword";
+import ResetPassword from "./pages/reset-password/ResetPassword";
 
 const router = createBrowserRouter([
   {
@@ -25,7 +27,14 @@ const router = createBrowserRouter([
         {
             path:'/cart',
             element:<Cart/>
-        }
+        },{
+            path:'/forgetPassword',
+            element:<ForgetPassword/>
+        },{
+            path:'/resetPassword',
+            element:<ResetPassword/>
+        },
+
     ]
   },
 ]);

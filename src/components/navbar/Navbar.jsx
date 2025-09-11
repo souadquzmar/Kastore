@@ -11,148 +11,167 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-
-const pages = ['Products', 'Pricing', 'Blog'];
+import navImg from '/src/assets/images/navbar/Group.svg';
+import { Link, Link as RouterLink } from 'react-router-dom';
+import { Stack } from "@mui/material";
+import style from "./Navbar.module.css"
+const pages = ['Home', 'Products', 'About Us', 'Contacts Us'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export default function Navbar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [anchorElNav, setAnchorElNav] = React.useState(null);
+    const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+    const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
+    const handleCloseNavMenu = () => setAnchorElNav(null);
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+    const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
+    const handleCloseUserMenu = () => setAnchorElUser(null);
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+    return (
+        <AppBar position="static" sx={{ backgroundColor: '#4FC4CA' }}>
+            <Container maxWidth="xl">
+                <Toolbar disableGutters>
 
-  return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
+                    <Typography
+                        variant="h6"
+                        noWrap
+                        component="div"
+                        sx={{
+                            mr: '200px',
+                            mt: 1,
+                            display: { xs: 'none', md: 'flex' },
+                        }}
+                    >
+                        <img src={navImg} width="150" height="80" alt="Logo" />
+                    </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{ display: { xs: 'block', md: 'none' } }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
-  );
+
+                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                        <IconButton
+                            size="large"
+                            aria-label="menu"
+                            onClick={handleOpenNavMenu}
+                            color="#16123F"
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Menu
+                            anchorEl={anchorElNav}
+                            open={Boolean(anchorElNav)}
+                            onClose={handleCloseNavMenu}
+                            anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+                            transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+                            PaperProps={{
+                                style: { backgroundColor: '#4FC4CA'},
+                            }}
+                            
+                        >
+                            {pages.map((page) => (
+                                <MenuItem
+                                    
+                                    key={page}
+                                    component={RouterLink}
+                                    to={`/${page.toLowerCase()}`}
+                                    onClick={handleCloseNavMenu}
+                                    disableTypography
+                                    style={{
+                                        justifyContent: 'center',
+                                       
+                                    }}
+                                    
+                                >
+                                    <div
+                                        style={{
+                                            color: '#16123F',
+                                            fontSize: '20px',
+                                            fontWeight: 600,
+                                            textAlign: 'center',
+                                            width: '100%',
+                                        }}
+                                        
+                                    >
+                                        {page}
+                                    </div>
+                                </MenuItem>
+                            ))}
+                        </Menu>
+                    </Box>
+
+
+                    <Typography
+                        variant="h6"
+                        noWrap
+                        component="div"
+                        sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+                    >
+                        <img src={navImg} width="150" height="80" alt="Logo" />
+                    </Typography>
+
+
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                        {pages.map((page) => (
+                            <Button
+                                key={page}
+                                component={RouterLink}
+                                to={`/${page.toLowerCase()}`}
+                                onClick={handleCloseNavMenu}
+                                sx={{
+                                    my: 2,
+                                    color: '#16123F',
+                                    display: 'block',
+                                    fontWeight: 600,
+                                    fontSize:'16px',
+                                    mr:5
+                                }}
+                            >
+                                {page}
+                            </Button>
+                        ))}
+                    </Box>
+
+
+
+
+                    <Box sx={{ flexGrow: 0 }}>
+                        <Stack direction="row" spacing={2}>
+                            <Link
+                                to="/login"
+                                style={{
+                                    backgroundColor: "#fff",
+                                    color: "#16123F",
+                                    textDecoration: "none",
+                                    padding: "8px 24px",
+                                    borderRadius: "16px",
+                                    fontWeight: 500,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                }}
+                            >
+                                Log in
+                            </Link>
+
+                            <Link
+                                to="/register"
+                                style={{
+                                    backgroundColor: "#16123F",
+                                    color: "#fff",
+                                    textDecoration: "none",
+                                    padding: "8px 24px",
+                                    borderRadius: "16px",
+                                    fontWeight: 500,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                }}
+                            >
+                                Register
+                            </Link>
+                        </Stack>
+                    </Box>
+                </Toolbar>
+            </Container>
+        </AppBar>
+    );
 }
