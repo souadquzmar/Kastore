@@ -1,93 +1,93 @@
-import { Box, Card, CardContent, CardMedia, CircularProgress, Grid, Typography } from '@mui/material';
+import { Divider } from '@mui/joy';
+import { 
+  Box, 
+  CircularProgress, 
+  Typography 
+} from '@mui/material';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 
 export default function Categories() {
+  const [categories, setCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-    const [categories, setCategories] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-
-    const getCategories = async () => {
-        try {
-            const response = await axios.get(`https://kashop1.runasp.net/api/Customer/Categories`);
-            setCategories(response.data);
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setIsLoading(false);
-        }
+  const getCategories = async () => {
+    try {
+      const response = await axios.get(`https://kashop1.runasp.net/api/Customer/Categories`);
+      setCategories(response.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
     }
-    useEffect(() => {
-        getCategories();
-    }, [])
+  };
 
-    if (isLoading) return <CircularProgress />;
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+  if (isLoading) {
     return (
-        <Box>
-            <Typography
-                component={'h2'}
-                variant='h4'
-                py={5}
-                sx={{ fontWeight: 800 }}
-            >
-                Categories
-            </Typography>
-
-            <Grid container spacing={5}>
-                {categories.map((category) => (
-                    <Grid
-                        item
-                        key={category.id}
-                        xs={12}
-                        sm={6}
-                        md={4}
-                        lg={3}
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Card
-                            sx={{
-                                borderRadius: '50%',
-                                width: 100,
-                                height: 100,
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                boxShadow: 3,
-                                cursor: 'pointer',
-                                background: 'linear-gradient(135deg, #f9f9f9, #f1f1f1)',
-                                transition: 'all 0.35s ease-in-out',
-                                '&:hover': {
-                                    transform: 'translateY(-6px) scale(1.07)',
-                                    boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
-                                    background: 'linear-gradient(135deg, #ffffff, #E6E3FF)',
-                                },
-                            }}
-                        >
-                            <CardContent
-                                
-                            >
-                                <Typography
-                                    component={'h3'}
-                                    variant='subtitle1'
-                                    fontWeight={600}
-                                    sx={{
-                                        textTransform: 'capitalize',
-                                        transition: 'color 0.3s',
-                                        '&:hover': { color: '#6862A0' },
-                                    }}
-                                >
-                                    {category.name}
-                                </Typography>
-                            </CardContent>
-                        </Card>
-                    </Grid>
-                ))}
-            </Grid>
-        </Box>
+      <Box 
+        sx={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center', 
+          height: '40vh' 
+        }}
+      >
+        <CircularProgress size={50} thickness={4} color="primary" />
+      </Box>
     );
+  }
 
+  return (
+    <Box>
+      <Typography
+        component="h2"
+        variant="h5"
+        pt={6}
+        pb={3}
+        sx={{ fontWeight: 800 }}
+      >
+        Categories
+         <Divider sx={{width:'150px', backgroundColor:'#AE75DA',mt:'4px',height:'2px'}}></Divider>
+      </Typography>
+
+      <Box
+        sx={{
+          display: 'flex',
+          gap: 2,
+          pb: 6,
+        }}
+      >
+        {categories.map((category) => (
+          <Box
+            key={category.id}
+            sx={{
+              px: 3,
+              py: 1.5,
+              borderRadius: '50px',
+              bgcolor: 'white',
+              border: '2px solid #e0e0e0',
+              fontWeight: 600,
+              fontSize: '1rem',
+              cursor: 'pointer',
+              whiteSpace: 'nowrap',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 2px 6px rgba(0,0,0,0.05)',
+              '&:hover': {
+                borderColor: '#AE75DA',
+                color: '#AE75DA',
+                transform: 'translateY(-3px)',
+                boxShadow: '0 6px 14px rgba(0,0,0,0.12)',
+              },
+            }}
+          >
+            {category.name}
+          </Box>
+        ))}
+      </Box>
+    </Box>
+  );
 }
