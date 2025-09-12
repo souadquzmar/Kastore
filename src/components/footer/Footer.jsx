@@ -10,7 +10,7 @@ import React from 'react'
 
 export default function Footer() {
     return (
-        <Box sx={{ backgroundColor: '#000', height: 'fit' }}>
+        <Box sx={{ backgroundColor: '#000' }}>
             <Container display={'flex'} >
                 <Grid container spacing={8}>
                     <Grid item py={4} xs={12} sm={6} md={4} lg={3}>

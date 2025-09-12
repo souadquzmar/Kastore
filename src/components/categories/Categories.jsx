@@ -58,7 +58,6 @@ export default function Categories() {
         sx={{
           display: 'flex',
           gap: 2,
-          pb: 6,
         }}
       >
         {categories.map((category) => (

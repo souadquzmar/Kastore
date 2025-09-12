@@ -30,7 +30,7 @@ export default function Login() {
     }
     return (
         <Box className="login-form" py={12}>
-            <Container maxWidth="md" bgcolor="red">
+            <Container maxWidth="md">
 
                 <Grid container sx={{borderRadius:7,boxShadow:"0 8px 24px 8px rgba(0,0,0,0.2)",border:"1px solid #edeaeacc",alignItems: 'stretch'}}>
                     <Grid item xs={12} sm={12} md={5} lg={5} sx={{display:'flex'}}>
