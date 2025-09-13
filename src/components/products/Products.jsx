@@ -20,7 +20,6 @@ export default function Products() {
       const response = await axios.get(
         `https://kashop1.runasp.net/api/Customer/Products`
       );
-      console.log(response);
       setProducts(response.data);
     } catch (error) {
       console.log(error);

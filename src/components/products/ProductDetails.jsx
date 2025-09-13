@@ -1,5 +1,5 @@
-import { CardContent, Typography } from '@mui/joy';
-import { Card, CardMedia, Chip, CircularProgress, Container, Grid, Rating } from '@mui/material';
+import { Button, CardContent, Typography } from '@mui/joy';
+import { Card, CardActions, CardMedia, Chip, CircularProgress, Container, Grid, Rating } from '@mui/material';
 import { Box } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
@@ -22,6 +22,19 @@ export default function ProductDetails() {
         }
     }
 
+    const addToCart = async (id)=>{
+        try{
+            const token = localStorage.getItem('userToken');
+            const response = await axios.post(`https://kashop1.runasp.net/api/Customer/Carts`,{productId:id},{
+                headers:{
+                    Authorization:`Bearer ${token}`
+                }
+            })
+            console.log(response);
+        } catch(error){
+            console.log(error);
+        }
+    }
     useEffect(() => {
         getProduct();
     }, []);
@@ -65,9 +78,11 @@ export default function ProductDetails() {
                             <Typography component={'h3'} variant='h4' sx={{color:'#464545ff',fontWeight:700,fontSize:'16px'}}>{product.price}$</Typography>
 
                         </Box>
-                        
+                    <CardActions sx={{p:0 ,width:'100%'}}>
+                        <Button variant='contained' sx={{backgroundColor:'#4fc4ca',color:'#312D5F',width:'100%'}} onClick={()=>{addToCart(product.id)}}>Buy</Button>
+                    </CardActions>
                     </CardContent>
-
+                    
                 </Card>
             </Container>
         </Box>
