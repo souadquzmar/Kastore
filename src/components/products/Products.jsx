@@ -11,25 +11,23 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import AxiosInstanse from "../../api/AxiosInstanse";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Products() {
-  const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
-  const getProducts = async () => {
-    try {
+
+  const fetchProducts = async () => {
       const response = await AxiosInstanse.get(`/Products`);
-      setProducts(response.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
+      return response.data;
   };
 
-  useEffect(() => {
-    getProducts();
-  }, []);
+  const {data,isLoading,isError,error} = useQuery({
+    queryKey:['Products'],
+    queryFn:fetchProducts,
+    staleTime:1000*60*5
+  })
+
+  if(isError) console.log(error);
 
   if (isLoading) {
     return (
@@ -66,7 +64,7 @@ export default function Products() {
       </Typography>
 
       <Grid container spacing={4}>
-        {products.map((product) => (
+        {data.map((product) => (
           <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
             <Card
               sx={{

@@ -8,22 +8,20 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add'
 import AxiosUserInstanse from '../../api/AxiosUserInstanse';
+import { useQuery } from '@tanstack/react-query';
 
 export default function Cart() {
 
-  const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
-  const getProducts = async () => {
-    try {
+  const fetchProducts = async () => {
       const response = await AxiosUserInstanse.get(`/Carts`);
-      setProducts(response.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
+      return response.data;
   };
+  const {data,isLoading,isError,error} = useQuery({
+    queryKey:['Products'],
+    queryFn:fetchProducts,
+    staleTime:1000*60*5
+  })
 
   const removeItem = async (productId) => {
     try {
@@ -68,9 +66,8 @@ export default function Cart() {
       console.log(error);
     }
   }
-  useEffect(() => {
-    getProducts();
-  }, []);
+  
+  if(isError) console.log(error);
 
   if (isLoading) {
     return (
@@ -90,7 +87,7 @@ export default function Cart() {
     <Box sx={{ height: '100vh' }} py={8}>
       <Container>
         <Typography component={'h2'} variant='h5' sx={{ fontWeight: 700, pb: 2 }}>Cart</Typography>
-        {products.items.map((product) => (
+        {data.items.map((product) => (
 
           <Card sx={{
             p: 2,
@@ -123,7 +120,7 @@ export default function Cart() {
 
         ))}
         <Box sx={{ display: 'flex', alignItems: 'center', pt: 4 }}>
-          <Typography component={'h2'} variant='h' sx={{ fontSize: '20px', color: '#000', flexGrow: 1 }}>Cart Total : {products.cartTotal}$</Typography>
+          <Typography component={'h2'} variant='h' sx={{ fontSize: '20px', color: '#000', flexGrow: 1 }}>Cart Total : {data.cartTotal}$</Typography>
           <Button variant='outlined' color='error' onClick={() => { clearCart() }}>
             Clear Cart
           </Button>

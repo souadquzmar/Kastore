@@ -1,40 +1,36 @@
 import { Divider } from '@mui/joy';
-import { 
-  Box, 
-  CircularProgress, 
-  Typography 
+import {
+  Box,
+  CircularProgress,
+  Typography
 } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import AxiosInstanse from '../../api/AxiosInstanse';
+import { useQuery } from '@tanstack/react-query';
 
 export default function Categories() {
-  const [categories, setCategories] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const fetchCategories = async () => {
 
-  const getCategories = async () => {
-    try {
-      const response = await AxiosInstanse.get(`/Categories`);
-      setCategories(response.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
+    const response = await AxiosInstanse.get(`/Categories`);
+    return response.data;
   };
 
-  useEffect(() => {
-    getCategories();
-  }, []);
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ['Categories'],
+    queryFn: fetchCategories,
+    staleTime: 1000 * 60 * 5
+  })
 
+  if (isError) console.log(error);
   if (isLoading) {
     return (
-      <Box 
-        sx={{ 
-          display: 'flex', 
-          justifyContent: 'center', 
-          alignItems: 'center', 
-          height: '40vh' 
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '40vh'
         }}
       >
         <CircularProgress size={50} thickness={4} color="primary" />
@@ -52,7 +48,7 @@ export default function Categories() {
         sx={{ fontWeight: 800 }}
       >
         Categories
-         <Divider sx={{width:'150px', backgroundColor:'#AE75DA',mt:'4px',height:'2px'}}></Divider>
+        <Divider sx={{ width: '150px', backgroundColor: '#AE75DA', mt: '4px', height: '2px' }}></Divider>
       </Typography>
 
       <Box
@@ -61,7 +57,7 @@ export default function Categories() {
           gap: 2,
         }}
       >
-        {categories.map((category) => (
+        {data.map((category) => (
           <Box
             key={category.id}
             sx={{

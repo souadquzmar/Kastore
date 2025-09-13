@@ -8,29 +8,23 @@ import {
   Grid, 
   Typography 
 } from '@mui/material';
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
 import AxiosInstanse from '../../api/AxiosInstanse';
+import { useQuery } from '@tanstack/react-query';
 
 export default function Brands() {
-  const [brands, setBrands] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  
+  const fetchBrands = async ()=>{
+    const response = await AxiosInstanse.get(`/Brands`);
+    return response.data;
+  }
 
-  const getBrands = async () => {
-    try {
-      const response = await AxiosInstanse.get(`/Brands`);
-      setBrands(response.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const {data,isLoading,isError,error} = useQuery({
+    queryKey:['Brands'],
+    queryFn:fetchBrands,
+    staleTime:1000 * 60 * 5
+  })
 
-  useEffect(() => {
-    getBrands();
-  }, []);
-
+  if(isError) console.log(error);
   if (isLoading) {
     return (
       <Box 
@@ -61,7 +55,7 @@ export default function Brands() {
       </Typography>
       
       <Grid container spacing={4}>
-        {brands.map((brand) => (
+        {data.map((brand) => (
           <Grid
             item
             key={brand.id}
