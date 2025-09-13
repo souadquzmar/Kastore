@@ -4,12 +4,13 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import loginSchema from '../../validations/LoginSchema';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate, useOutletContext } from 'react-router-dom';
 import { Grid } from '@mui/joy';
 import frame2 from "/src/assets/images/login_register/Frame2.svg";
 import AxiosAuthInstanse from '../../api/AxiosAuthInstanse';
 export default function Login() {
 
+    const { setIsLoggedIn } = useOutletContext();
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(loginSchema)
@@ -21,6 +22,7 @@ export default function Login() {
             const response = await AxiosAuthInstanse.post(`/Login`, data);
             if (response.status == 200) {
                 localStorage.setItem("userToken", response.data.token);
+                setIsLoggedIn(true);
                 navigate('/');
             }
         } catch (error) {
