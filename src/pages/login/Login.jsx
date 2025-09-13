@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import loginSchema from '../../validations/LoginSchema';
 import { Link as RouterLink, useNavigate, useOutletContext } from 'react-router-dom';
-import { Grid } from '@mui/joy';
+import { Grid } from '@mui/material';
 import frame2 from "/src/assets/images/login_register/Frame2.svg";
 import AxiosAuthInstanse from '../../api/AxiosAuthInstanse';
 export default function Login() {
@@ -33,23 +33,23 @@ export default function Login() {
     }
     return (
         <Box className="login-form" py={12}>
-            <Container maxWidth="md">
+            <Container maxWidth='md'>
 
-                <Grid container sx={{borderRadius:7,boxShadow:"0 8px 24px 8px rgba(0,0,0,0.2)",border:"1px solid #edeaeacc",alignItems: 'stretch'}}>
-                    <Grid item xs={12} sm={12} md={5} lg={5} sx={{display:'flex'}}>
-                        <img src={frame2} width={'100%'} height={'100%'} style={{objectFit:'cover'}}></img>
+                <Grid container direction="row" sx={{borderRadius:7,boxShadow:"0 8px 24px 8px rgba(0,0,0,0.2)",border:"1px solid #edeaeacc"}} >
+                    <Grid item size={{xs:12 , sm:12 , md:5 , lg:5}}>
+                        <img src={frame2} width={'100%'} height={'100%'} style={{objectFit:'cover' , borderRadius:20}}></img>
                     </Grid>
-                    <Grid item xs={12} sm={12} md={7} lg={7}
+                    <Grid item size={{xs:12 , sm:12 , md:7 , lg:7}}
                         onSubmit={handleSubmit(onSubmit)}
-                        component={"form"} sx={{
+                        component="form" sx={{
                             display: "flex",
                             flexDirection: "column",
                             gap: 3,
-                            my:6,
-                            px:6
+                            p:6,
+                            
                         }}>
                         <Typography component={"h1"} variant='h5' sx={{ fontWeight: 600 }}>Login Page</Typography>
-                        <Typography component={"p"} sx={{ color: "#717171" }}>Good to see you again!</Typography>
+                        <Typography component={"p"} color='textSecondery'>Good to see you again!</Typography>
                         <TextField {...register("email")} id="email" label="Email" variant="outlined" error={errors.email} helperText={errors.email?.message} />
                         <TextField {...register("password")} id="password" label="Password" variant="outlined" error={errors.password} helperText={errors.password?.message} />
                         <Link underline='none' sx={{ color: "#6862A0" }} component={RouterLink} to={'/forgetPassword'}>Forget Password?</Link>

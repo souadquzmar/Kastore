@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, CardContent, Link } from "@mui/joy";
+import { Button, Card, CardActions, CardContent, Link } from "@mui/material";
 import {
   Box,
   CardMedia,
@@ -7,8 +7,6 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import AxiosInstanse from "../../api/AxiosInstanse";
 import { useQuery } from "@tanstack/react-query";
@@ -18,11 +16,11 @@ export default function Products() {
 
   const fetchProducts = async () => {
       const response = await AxiosInstanse.get(`/Products`);
-      return response.data;
+      return response;
   };
 
   const {data,isLoading,isError,error} = useQuery({
-    queryKey:['Products'],
+    queryKey:['products'],
     queryFn:fetchProducts,
     staleTime:1000*60*5
   })
@@ -64,11 +62,10 @@ export default function Products() {
       </Typography>
 
       <Grid container spacing={4}>
-        {data.map((product) => (
+        {data.data.map((product) => (
           <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
             <Card
               sx={{
-                backgroundColor:'#ffffff',
                 border:0,
                 width: 240,
                 height: 480,

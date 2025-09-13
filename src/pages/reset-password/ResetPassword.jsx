@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import resetPasswordSchema from '../../validations/ResetPasswordSchema';
-import { Grid } from '@mui/joy';
+import { Grid } from '@mui/material';
 import frame2 from "/src/assets/images/login_register/Frame2.svg";
 import AxiosAuthInstanse from '../../api/AxiosAuthInstanse';
 export default function ResetPassword() {
@@ -31,10 +31,10 @@ export default function ResetPassword() {
         <Box className="reset-password-form" py={12}>
             <Container maxWidth="lg" bgcolor="red">
                 <Grid container sx={{ borderRadius: 7, boxShadow: "0 8px 24px 8px rgba(0,0,0,0.2)", border: "1px solid #edeaeacc", alignItems: 'stretch' }}>
-                    <Grid item xs={12} sm={12} md={5} lg={5} sx={{ display: 'flex' }} >
-                        <img src={frame2} width={'100%'} height={'100%'} style={{ objectFit: 'cover' }}></img>
+                    <Grid item size={{xs:12 , sm:12 , md:5 , lg:5}} sx={{ display: 'flex' }} >
+                        <img src={frame2} width={'100%'} height={'100%'} style={{ objectFit: 'cover' ,borderRadius:20}}></img>
                     </Grid>
-                    <Grid item xs={12} sm={12} md={7} lg={7}
+                    <Grid item size={{xs:12 , sm:12 , md:7 , lg:7}}
                         onSubmit={handleSubmit(onSubmit)}
                         component={"form"} sx={{
                             display: "flex",
@@ -46,7 +46,7 @@ export default function ResetPassword() {
                         }}>
                         <Typography component={"h1"} variant='h5' sx={{ color: "#312D5F", fontWeight: 800 }}>Step 2</Typography>
                         <Typography component={"h1"} variant='h5' sx={{ fontWeight: 800}}>Reset Password</Typography>
-                        <Typography component={"p"} sx={{ color: "#717171", mt: 2 }}>We have sent OTP code via email, please enter it below to reset your password.</Typography>
+                        <Typography component={"p"} sx={{ mt: 2 }} color='textSecondery'>We have sent OTP code via email, please enter it below to reset your password.</Typography>
 
 
                         <TextField {...register("email")} id="email" label="Email" variant="outlined" error={errors.email} helperText={errors.email?.message} />

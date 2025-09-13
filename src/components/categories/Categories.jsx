@@ -1,4 +1,4 @@
-import { Divider } from '@mui/joy';
+import { Divider } from '@mui/material';
 import {
   Box,
   CircularProgress,
@@ -64,7 +64,6 @@ export default function Categories() {
               px: 3,
               py: 1.5,
               borderRadius: '50px',
-              bgcolor: 'white',
               border: '2px solid #e0e0e0',
               fontWeight: 600,
               fontSize: '1rem',

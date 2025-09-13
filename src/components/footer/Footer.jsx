@@ -1,4 +1,4 @@
-import { Box, Grid } from '@mui/joy'
+import { Box, Grid } from '@mui/material'
 import { Container, Divider, IconButton, Typography } from '@mui/material'
 import InstagramIcon from "@mui/icons-material/Instagram";
 import PinterestIcon from "@mui/icons-material/Pinterest";

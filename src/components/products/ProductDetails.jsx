@@ -1,4 +1,4 @@
-import { Button, CardContent, Typography } from '@mui/joy';
+import { Button, CardContent, Typography } from '@mui/material';
 import { Card, CardActions, CardMedia, Chip, CircularProgress, Container, Grid, Rating } from '@mui/material';
 import { Box } from '@mui/material';
 import axios from 'axios';
@@ -59,7 +59,7 @@ export default function ProductDetails() {
                         sx={{ height: '100%', width: '40%' }}
                     />
                     <CardContent sx={{ p: 4, display: 'flex', flexDirection: 'column', gap: 2 }}>
-                        <Typography component={'h2'} variant='h4' sx={{ fontWeight: 800, color: '#000', fontSize: '18px' }}>{data.name}</Typography>
+                        <Typography component={'h2'} variant='h2' sx={{ fontWeight: 800, fontSize: '18px' }} >{data.name}</Typography>
                         <Typography component={'p'} variant='body1' >{data.description}</Typography>
                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                             <Typography component={'h3'} variant='h4' sx={{ color: '#4fc4ca', fontWeight: 800, fontSize: '18px' }}>Rate</Typography>
@@ -70,7 +70,7 @@ export default function ProductDetails() {
                         <Typography component={'h3'} variant='h6' sx={{ color: '#4fc4ca', fontWeight: 800, fontSize: '18px' }}>Brand : <Chip label={data.brandName} /></Typography>
                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                             <Typography component={'h3'} variant='h4' sx={{ color: '#4fc4ca', fontWeight: 800, fontSize: '18px' }}>Price</Typography>
-                            <Typography component={'h3'} variant='h4' sx={{ color: '#464545ff', fontWeight: 700, fontSize: '16px' }}>{data.price}$</Typography>
+                            <Typography component={'h3'} variant='h4' sx={{fontWeight: 700, fontSize: '16px' }} color='textSecondary'>{data.price}$</Typography>
 
                         </Box>
                         <CardActions sx={{ p: 0, width: '100%' }}>

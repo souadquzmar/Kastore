@@ -1,4 +1,4 @@
-import { Divider } from '@mui/joy';
+import { Divider } from '@mui/material';
 import { 
   Box, 
   Card, 
@@ -15,7 +15,7 @@ export default function Brands() {
   
   const fetchBrands = async ()=>{
     const response = await AxiosInstanse.get(`/Brands`);
-    return response.data;
+    return response;
   }
 
   const {data,isLoading,isError,error} = useQuery({
@@ -25,7 +25,7 @@ export default function Brands() {
   })
 
   if(isError) console.log(error);
-  if (isLoading) {
+  if (isLoading) 
     return (
       <Box 
         sx={{ 
@@ -38,7 +38,6 @@ export default function Brands() {
         <CircularProgress size={60} thickness={5} color="primary" />
       </Box>
     );
-  }
 
   return (
     <Box>
@@ -55,7 +54,7 @@ export default function Brands() {
       </Typography>
       
       <Grid container spacing={4}>
-        {data.map((brand) => (
+        {data.data.map((brand) => (
           <Grid
             item
             key={brand.id}

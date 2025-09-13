@@ -1,9 +1,7 @@
-import { CardContent } from '@mui/joy';
+import { CardContent } from '@mui/material';
 import { Button, Card, CardActions, CardMedia, Container, Typography } from '@mui/material';
 import { CircularProgress } from '@mui/material';
 import { Box } from '@mui/material';
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
 import DeleteIcon from '@mui/icons-material/Delete'
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add'
@@ -15,13 +13,14 @@ export default function Cart() {
 
   const fetchProducts = async () => {
       const response = await AxiosUserInstanse.get(`/Carts`);
-      return response.data;
+      return response;
   };
   const {data,isLoading,isError,error} = useQuery({
     queryKey:['Products'],
     queryFn:fetchProducts,
     staleTime:1000*60*5
   })
+  
 
   const removeItem = async (productId) => {
     try {
@@ -87,7 +86,7 @@ export default function Cart() {
     <Box sx={{ height: '100vh' }} py={8}>
       <Container>
         <Typography component={'h2'} variant='h5' sx={{ fontWeight: 700, pb: 2 }}>Cart</Typography>
-        {data.items.map((product) => (
+        {data.data.items.map((product) => (
 
           <Card sx={{
             p: 2,
@@ -101,10 +100,10 @@ export default function Cart() {
               boxShadow: "0 8px 20px rgba(0,0,0,0.2)",
             },
           }} >
-            <CardContent>
+            <CardContent sx={{flexGrow:1}}>
               <Typography component={'h2'} variant='h6' sx={{ fontSize: '18px', color: '#4fc4ca', fontWeight: 800 }}>{product.productName}</Typography>
-              <Typography component={'h2'} variant='h6' sx={{ fontSize: '16px', color: '#404040ff' }}>Price : {product.price}$</Typography>
-              <Typography component={'h2'} variant='h' sx={{ fontSize: '20px', color: '#000' }}>Total Price : {product.totalPrice}$</Typography>
+              <Typography component={'h2'} variant='h6' sx={{ fontSize: '16px'}} color='textSecondary'>Price : {product.price}$</Typography>
+              <Typography component={'h2'} variant='h' sx={{ fontSize: '20px'}}>Total Price : {product.totalPrice}$</Typography>
             </CardContent>
             <CardActions sx={{display:'flex',flexDirection:'column',justifyContent:"flex-start",gap:2}}>
               <Button startIcon={<DeleteIcon />} color='error' onClick={() => { removeItem(product.productId) }}>
@@ -119,8 +118,8 @@ export default function Cart() {
           </Card>
 
         ))}
-        <Box sx={{ display: 'flex', alignItems: 'center', pt: 4 }}>
-          <Typography component={'h2'} variant='h' sx={{ fontSize: '20px', color: '#000', flexGrow: 1 }}>Cart Total : {data.cartTotal}$</Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', py:4}}>
+          <Typography component={'h2'} variant='h' sx={{ fontSize: '20px', flexGrow: 1 }}>Cart Total : {data.data.cartTotal}$</Typography>
           <Button variant='outlined' color='error' onClick={() => { clearCart() }}>
             Clear Cart
           </Button>
