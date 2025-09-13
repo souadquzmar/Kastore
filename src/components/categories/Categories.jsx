@@ -6,6 +6,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import AxiosInstanse from '../../api/AxiosInstanse';
 
 export default function Categories() {
   const [categories, setCategories] = useState([]);
@@ -13,7 +14,7 @@ export default function Categories() {
 
   const getCategories = async () => {
     try {
-      const response = await axios.get(`https://kashop1.runasp.net/api/Customer/Categories`);
+      const response = await AxiosInstanse.get(`/Categories`);
       setCategories(response.data);
     } catch (error) {
       console.log(error);

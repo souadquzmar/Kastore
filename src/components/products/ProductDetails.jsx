@@ -4,6 +4,8 @@ import { Box } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import AxiosInstanse from '../../api/AxiosInstanse';
+import AxiosUserInstanse from '../../api/AxiosUserInstanse';
 
 export default function ProductDetails() {
 
@@ -13,7 +15,7 @@ export default function ProductDetails() {
 
     const getProduct = async () => {
         try {
-            const response = await axios.get(`https://kashop1.runasp.net/api/Customer/Products/${id}`);
+            const response = await AxiosInstanse.get(`/Products/${id}`);
             setProduct(response.data);
         } catch (error) {
             console.log(error);
@@ -24,12 +26,7 @@ export default function ProductDetails() {
 
     const addToCart = async (id)=>{
         try{
-            const token = localStorage.getItem('userToken');
-            const response = await axios.post(`https://kashop1.runasp.net/api/Customer/Carts`,{productId:id},{
-                headers:{
-                    Authorization:`Bearer ${token}`
-                }
-            })
+            const response = await AxiosUserInstanse.post(`/Carts`,{productId:id});
             console.log(response);
         } catch(error){
             console.log(error);

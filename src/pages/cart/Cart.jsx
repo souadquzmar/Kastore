@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react'
 import DeleteIcon from '@mui/icons-material/Delete'
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add'
+import AxiosUserInstanse from '../../api/AxiosUserInstanse';
 
 export default function Cart() {
 
@@ -14,15 +15,8 @@ export default function Cart() {
   const [isLoading, setIsLoading] = useState(true);
 
   const getProducts = async () => {
-    const token = localStorage.getItem('userToken');
     try {
-      const response = await axios.get(
-        `https://kashop1.runasp.net/api/Customer/Carts`, {
-        headers: {
-          AUTHORIZATION: `Bearer ${token}`
-        }
-      }
-      );
+      const response = await AxiosUserInstanse.get(`/Carts`);
       setProducts(response.data);
     } catch (error) {
       console.log(error);
@@ -32,27 +26,19 @@ export default function Cart() {
   };
 
   const removeItem = async (productId) => {
-    const token = localStorage.getItem('userToken');
     try {
-      const response = await axios.delete(`https://kashop1.runasp.net/api/Customer/Carts/${productId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
+      const response = await AxiosUserInstanse.delete(`/Carts/${productId}`);
+      if(response.status == 200){
       getProducts();
+      }
     } catch (error) {
       console.log(error);
     }
   }
 
   const clearCart = async () => {
-    const token = localStorage.getItem('userToken');
     try {
-      const response = await axios.delete(`https://kashop1.runasp.net/api/Customer/Carts/clear`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
+      const response = await AxiosUserInstanse.delete(`/Carts/clear`);
       if (response.status == 200) {
         getProducts();
       }
@@ -62,13 +48,8 @@ export default function Cart() {
   }
 
   const incItem = async(productId)=>{
-     const token = localStorage.getItem('userToken');
     try{
-      const response = await axios.post(`https://kashop1.runasp.net/api/Customer/Carts/increment/${productId}`,{},{
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      const response = await AxiosUserInstanse.post(`/Carts/increment/${productId}`,{});
       if (response.status == 200) {
         getProducts();
       }
@@ -78,13 +59,8 @@ export default function Cart() {
   }
 
   const decItem = async(productId)=>{
-     const token = localStorage.getItem('userToken');
     try{
-      const response = await axios.post(`https://kashop1.runasp.net/api/Customer/Carts/decrement/${productId}`,{},{
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      const response = await AxiosUserInstanse.post(`/Carts/decrement/${productId}`,{});
       if (response.status == 200) {
         getProducts();
       }
@@ -138,7 +114,7 @@ export default function Cart() {
                 Delete
               </Button>
               <Box sx={{display:'flex',alignItems:'center',gap:1,border:'1px solid rgba(219, 219, 219, 0.87)',borderRadius:3}}>
-                <Button sx={{color:'#4fc4ca',minWidth:'auto'}} onClick={()=>{decItem(product.productId)}}><RemoveIcon sx={{fontWeight:900}}/></Button>
+                <Button sx={{color:'#4fc4ca',minWidth:'auto'}} onClick={product.count == 1? () => { removeItem(product.productId) }:()=>{decItem(product.productId)}}><RemoveIcon sx={{fontWeight:900}}/></Button>
                 <Typography>{product.count}</Typography>
                 <Button sx={{color:'#4fc4ca',minWidth:'auto'}} onClick={()=>{incItem(product.productId)}} ><AddIcon /></Button>
               </Box>

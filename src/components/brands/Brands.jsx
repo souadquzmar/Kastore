@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import AxiosInstanse from '../../api/AxiosInstanse';
 
 export default function Brands() {
   const [brands, setBrands] = useState([]);
@@ -17,7 +18,7 @@ export default function Brands() {
 
   const getBrands = async () => {
     try {
-      const response = await axios.get(`https://kashop1.runasp.net/api/Customer/Brands`);
+      const response = await AxiosInstanse.get(`/Brands`);
       setBrands(response.data);
     } catch (error) {
       console.log(error);

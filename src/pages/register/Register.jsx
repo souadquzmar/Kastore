@@ -10,6 +10,7 @@ import WarningIcon from '@mui/icons-material/Warning';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { Grid } from '@mui/joy';
 import frame1 from "/src/assets/images/login_register/Frame1.svg";
+import AxiosAuthInstanse from '../../api/AxiosAuthInstanse';
 export default function Register() {
 
     const [serverError, setServerError] = useState("");
@@ -21,7 +22,7 @@ export default function Register() {
     const onSubmit = async (data) => {
         setIsLoading(true);
         try {
-            const response = await axios.post(`https://kashop1.runasp.net/api/Identity/Account/Register`, data);
+            const response = await AxiosAuthInstanse.post(`/Register`, data);
             if (response.status == 200)
                 navigate('/login');
         } catch (error) {

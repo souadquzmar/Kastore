@@ -14,19 +14,14 @@ import MenuItem from '@mui/material/MenuItem';
 import navImg from '/src/assets/images/navbar/Group.svg';
 import { Link, Link as RouterLink } from 'react-router-dom';
 import { Stack } from "@mui/material";
-import style from "./Navbar.module.css"
+
 const pages = ['Home', 'Products', 'About Us', 'Contacts Us'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export default function Navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
 
     const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
     const handleCloseNavMenu = () => setAnchorElNav(null);
-
-    const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
-    const handleCloseUserMenu = () => setAnchorElUser(null);
 
     return (
         <AppBar position="static" sx={{ backgroundColor: '#4FC4CA' }}>

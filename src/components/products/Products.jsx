@@ -10,6 +10,7 @@ import {
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
+import AxiosInstanse from "../../api/AxiosInstanse";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -17,9 +18,7 @@ export default function Products() {
 
   const getProducts = async () => {
     try {
-      const response = await axios.get(
-        `https://kashop1.runasp.net/api/Customer/Products`
-      );
+      const response = await AxiosInstanse.get(`/Products`);
       setProducts(response.data);
     } catch (error) {
       console.log(error);

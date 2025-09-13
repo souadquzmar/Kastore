@@ -7,6 +7,7 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import resetPasswordSchema from '../../validations/ResetPasswordSchema';
 import { Grid } from '@mui/joy';
 import frame2 from "/src/assets/images/login_register/Frame2.svg";
+import AxiosAuthInstanse from '../../api/AxiosAuthInstanse';
 export default function ResetPassword() {
 
     const navigate = useNavigate();
@@ -17,7 +18,7 @@ export default function ResetPassword() {
     const onSubmit = async (data) => {
         setIsLoading(true);
         try {
-            const response = await axios.patch(`https://kashop1.runasp.net/api/Identity/Account/reset-password`, data);
+            const response = await AxiosAuthInstanse.patch(`/reset-password`, data);
             if (response.status == 200)
                 navigate('/login');
         } catch (error) {

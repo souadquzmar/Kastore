@@ -7,6 +7,8 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import forgetPasswordSchema from '../../validations/ForgetPasswordSchema';
 import { Grid } from '@mui/joy';
 import frame1 from "/src/assets/images/login_register/Frame1.svg"
+import AxiosAuthInstanse from '../../api/AxiosAuthInstanse';
+
 export default function ForgetPassword() {
 
     const navigate = useNavigate();
@@ -17,7 +19,7 @@ export default function ForgetPassword() {
     const onSubmit = async (data) => {
         setIsLoading(true);
         try {
-            const response = await axios.post(`https://kashop1.runasp.net/api/Identity/Account/forgot-password`, data);
+            const response = await AxiosAuthInstanse.post(`/forgot-password`, data);
             if (response.status == 200) {
                 navigate('/resetPassword');
             }
