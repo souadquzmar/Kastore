@@ -15,7 +15,7 @@ import navImg from '/src/assets/images/navbar/Group.svg';
 import { Link, Link as RouterLink } from 'react-router-dom';
 import { Stack } from "@mui/material";
 
-const pages = ['Home', 'Products', 'About Us', 'Contacts Us'];
+const pages = ['Home', 'Products', 'About Us', 'Cart'];
 
 export default function Navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
