@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Button, CircularProgress, Container, TextField, Typography, Link } from '@mui/material'
+import { Box, Button, CircularProgress, Container, TextField, Typography, Link, Alert } from '@mui/material'
 import axios from 'axios';
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -8,8 +8,10 @@ import { Link as RouterLink, useNavigate, useOutletContext } from 'react-router-
 import { Grid } from '@mui/material';
 import frame2 from "/src/assets/images/login_register/Frame2.svg";
 import AxiosAuthInstanse from '../../api/AxiosAuthInstanse';
+import { Slide, toast } from 'react-toastify';
 export default function Login() {
 
+    const [serverError, setServerError] = useState("");
     const { setIsLoggedIn } = useOutletContext();
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm({
@@ -23,10 +25,24 @@ export default function Login() {
             if (response.status == 200) {
                 localStorage.setItem("userToken", response.data.token);
                 setIsLoggedIn(true);
+                toast.success('Logged In Successfully!', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Slide,
+                });
                 navigate('/');
             }
         } catch (error) {
-            console.log(error);
+            if (error.response)
+                setServerError(error.response.data.message);
+            else
+                setServerError("An unexpected server error");
         } finally {
             setIsLoading(false);
         }
@@ -35,23 +51,26 @@ export default function Login() {
         <Box className="login-form" py={12}>
             <Container maxWidth='md'>
 
-                <Grid container direction="row" sx={{borderRadius:7,boxShadow:"0 8px 24px 8px rgba(0,0,0,0.2)",border:"1px solid #edeaeacc"}} >
-                    <Grid item size={{xs:12 , sm:12 , md:5 , lg:5}}>
-                        <img src={frame2} width={'100%'} height={'100%'} style={{objectFit:'cover' , borderRadius:20}}></img>
+                <Grid container direction="row" sx={{ borderRadius: 7, boxShadow: "0 8px 24px 8px rgba(0,0,0,0.2)", border: "1px solid #edeaeacc" }} >
+                    <Grid item size={{ xs: 12, sm: 12, md: 5, lg: 5 }}>
+                        <img src={frame2} width={'100%'} height={'100%'} style={{ objectFit: 'cover', borderRadius: 20 }}></img>
                     </Grid>
-                    <Grid item size={{xs:12 , sm:12 , md:7 , lg:7}}
+                    <Grid item size={{ xs: 12, sm: 12, md: 7, lg: 7 }}
                         onSubmit={handleSubmit(onSubmit)}
                         component="form" sx={{
                             display: "flex",
                             flexDirection: "column",
                             gap: 3,
-                            p:6,
-                            
+                            p: 6,
+
                         }}>
                         <Typography component={"h1"} variant='h5' sx={{ fontWeight: 600 }}>Login Page</Typography>
                         <Typography component={"p"} color='textSecondery'>Good to see you again!</Typography>
                         <TextField {...register("email")} id="email" label="Email" variant="outlined" error={errors.email} helperText={errors.email?.message} />
                         <TextField {...register("password")} id="password" label="Password" variant="outlined" error={errors.password} helperText={errors.password?.message} />
+                        {serverError && (
+                            <Alert severity="error">{serverError}</Alert>
+                        )}
                         <Link underline='none' sx={{ color: "#6862A0" }} component={RouterLink} to={'/forgetPassword'}>Forget Password?</Link>
                         <Button variant="contained" type='submit' sx={{ background: "#4fc4ca", color: "#312D5F", borderRadius: 2 }} disabled={isLoading}>
                             {isLoading ? <CircularProgress /> : "Login"}

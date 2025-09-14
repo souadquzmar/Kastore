@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom'
 import AxiosInstanse from '../../api/AxiosInstanse';
 import AxiosUserInstanse from '../../api/AxiosUserInstanse';
 import { useQuery } from '@tanstack/react-query';
+import { Slide, toast } from 'react-toastify';
 
 export default function ProductDetails() {
 
@@ -17,22 +18,50 @@ export default function ProductDetails() {
         return response.data;
     }
 
-    const{data,isLoading,isError,error} = useQuery({
-        queryKey:['product',id],
-        queryFn:fetchProduct,
-        staleTime:1000*60*5
+    const { data, isLoading, isError, error } = useQuery({
+        queryKey: ['product', id],
+        queryFn: fetchProduct,
+        staleTime: 1000 * 60 * 5
     })
 
     const addToCart = async (id) => {
         try {
             const response = await AxiosUserInstanse.post(`/Carts`, { productId: id });
-            console.log(response);
+            if (response.status == 200) {
+                toast.success('Product Added Successfully!', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Slide,
+                });
+
+            }
+
+            else {
+                toast.error('Something Wrong Happened!', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Slide,
+                });
+
+            }
         } catch (error) {
             console.log(error);
         }
     }
-    
-    if(isError) console.log(error);
+
+    if (isError) console.log(error);
 
     if (isLoading) {
         return (
@@ -70,7 +99,7 @@ export default function ProductDetails() {
                         <Typography component={'h3'} variant='h6' sx={{ color: '#4fc4ca', fontWeight: 800, fontSize: '18px' }}>Brand : <Chip label={data.brandName} /></Typography>
                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                             <Typography component={'h3'} variant='h4' sx={{ color: '#4fc4ca', fontWeight: 800, fontSize: '18px' }}>Price</Typography>
-                            <Typography component={'h3'} variant='h4' sx={{fontWeight: 700, fontSize: '16px' }} color='textSecondary'>{data.price}$</Typography>
+                            <Typography component={'h3'} variant='h4' sx={{ fontWeight: 700, fontSize: '16px' }} color='textSecondary'>{data.price}$</Typography>
 
                         </Box>
                         <CardActions sx={{ p: 0, width: '100%' }}>

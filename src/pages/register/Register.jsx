@@ -9,6 +9,7 @@ import WarningIcon from '@mui/icons-material/Warning';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import frame1 from "/src/assets/images/login_register/Frame1.svg";
 import AxiosAuthInstanse from '../../api/AxiosAuthInstanse';
+import { Slide, toast } from 'react-toastify';
 export default function Register() {
 
     const [serverError, setServerError] = useState("");
@@ -21,8 +22,20 @@ export default function Register() {
         setIsLoading(true);
         try {
             const response = await AxiosAuthInstanse.post(`/Register`, data);
-            if (response.status == 200)
+            if (response.status == 200){
+                toast.success('Account Created Successfully!', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Slide,
+                });
                 navigate('/login');
+            }
         } catch (error) {
             if (error.response)
                 setServerError(error.response.data.message);

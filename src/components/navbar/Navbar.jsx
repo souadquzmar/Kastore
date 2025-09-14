@@ -12,18 +12,30 @@ import MenuItem from '@mui/material/MenuItem';
 import navImg from '/src/assets/images/navbar/Group.svg';
 import { Link, Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Stack } from "@mui/material";
+import { Slide, toast } from 'react-toastify';
 
 
-export default function Navbar({ isLoggedIn ,setIsLoggedIn}) {
+export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
 
     const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
     const handleCloseNavMenu = () => setAnchorElNav(null);
 
     const navigate = useNavigate();
-    const handleLogout = ()=>{
+    const handleLogout = () => {
         localStorage.removeItem('userToken');
         setIsLoggedIn(false);
+        toast.success('Logged Out Successfully!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Slide,
+        });
         navigate('/login');
     }
     return (
@@ -258,7 +270,7 @@ export default function Navbar({ isLoggedIn ,setIsLoggedIn}) {
                         >
                             cart
                         </Button> : null}
-                        
+
 
                     </Box>
 
@@ -268,7 +280,7 @@ export default function Navbar({ isLoggedIn ,setIsLoggedIn}) {
                     {isLoggedIn ? <Box sx={{ flexGrow: 0 }} >
                         <Stack direction="row" spacing={2} >
                             <Button
-                                onClick={()=>{handleLogout()}}
+                                onClick={() => { handleLogout() }}
                                 style={{
                                     backgroundColor: "#fff",
                                     color: "#16123F",
