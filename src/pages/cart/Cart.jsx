@@ -19,7 +19,7 @@ export default function Cart() {
   const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey: ['Products'],
     queryFn: fetchProducts,
-    staleTime: 1000 * 60 * 5
+    staleTime: 1000
 
   })
 

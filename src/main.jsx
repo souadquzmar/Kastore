@@ -9,14 +9,15 @@ import '@fontsource/roboto/700.css';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { ToastContainer } from 'react-toastify';
 import darkTheme from './Theme.jsx';
+import { ThemeContext } from '@emotion/react';
+import ThemeContextProvider from './context/ThemeContext.jsx';
 
 createRoot(document.getElementById('root')).render(
     <>
-        <ThemeProvider theme={darkTheme}>
-            <CssBaseline />
+        <ThemeContextProvider>
             <ToastContainer />
             <App />
-        </ThemeProvider>
+        </ThemeContextProvider>
     </>
 
 

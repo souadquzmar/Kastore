@@ -13,9 +13,14 @@ import navImg from '/src/assets/images/navbar/Group.svg';
 import { Link, Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Stack } from "@mui/material";
 import { Slide, toast } from 'react-toastify';
-
+import { useContext } from 'react';
+import { ThemeContext } from '../../context/ThemeContext';
+import DarkModeIcon from '@mui/icons-material/DarkModeRounded';
+import LightModeIcon from '@mui/icons-material/LightModeRounded';
 
 export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
+
+    const { mode, toggleTheme } = useContext(ThemeContext);
     const [anchorElNav, setAnchorElNav] = React.useState(null);
 
     const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
@@ -75,7 +80,7 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
                             PaperProps={{
                                 style: { backgroundColor: '#4FC4CA' },
                             }}
-
+                            
                         >
 
 
@@ -185,8 +190,11 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
                                 </div>
                             </MenuItem> : null
                             }
-
-
+                            <MenuItem sx={{display:'flex',justifyContent:'center'}}>
+                                <IconButton onClick={toggleTheme} sx={{ height: '50%' }}>
+                                    {mode == 'light' ? <DarkModeIcon /> : <LightModeIcon />}
+                                </IconButton>
+                            </MenuItem>
 
                         </Menu>
                     </Box>
@@ -203,7 +211,7 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
 
 
 
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', alignItems: 'center' } }}>
 
 
                         <Button
@@ -270,6 +278,10 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
                         >
                             cart
                         </Button> : null}
+
+                        <IconButton onClick={toggleTheme} sx={{ height: '50%' }}>
+                            {mode == 'light' ? <DarkModeIcon /> : <LightModeIcon />}
+                        </IconButton>
 
 
                     </Box>
