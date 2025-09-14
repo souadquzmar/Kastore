@@ -8,9 +8,11 @@ import AxiosInstanse from '../../api/AxiosInstanse';
 import AxiosUserInstanse from '../../api/AxiosUserInstanse';
 import { useQuery } from '@tanstack/react-query';
 import { Slide, toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 export default function ProductDetails() {
 
+    const {t} = useTranslation();
     const { id } = useParams();
 
     const fetchProduct = async () => {
@@ -28,7 +30,7 @@ export default function ProductDetails() {
         try {
             const response = await AxiosUserInstanse.post(`/Carts`, { productId: id });
             if (response.status == 200) {
-                toast.success('Product Added Successfully!', {
+                toast.success(t('product_added_successfully'), {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -43,7 +45,7 @@ export default function ProductDetails() {
             }
 
             else {
-                toast.error('Something Wrong Happened!', {
+                toast.error(t('smth_wrong'), {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -91,19 +93,19 @@ export default function ProductDetails() {
                         <Typography component={'h2'} variant='h2' sx={{ fontWeight: 800, fontSize: '18px' }} >{data.name}</Typography>
                         <Typography component={'p'} variant='body1' >{data.description}</Typography>
                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                            <Typography component={'h3'} variant='h4' sx={{ color: '#4fc4ca', fontWeight: 800, fontSize: '18px' }}>Rate</Typography>
+                            <Typography component={'h3'} variant='h4' sx={{ color: '#4fc4ca', fontWeight: 800, fontSize: '18px' }}>{t('Rate')}</Typography>
                             <Rating name="read-only" value={data.rate} readOnly />
                         </Box>
 
-                        <Typography component={'h3'} variant='h6' sx={{ color: '#4fc4ca', fontWeight: 800, fontSize: '18px' }}>Category : <Chip label={data.categoryName} /></Typography>
-                        <Typography component={'h3'} variant='h6' sx={{ color: '#4fc4ca', fontWeight: 800, fontSize: '18px' }}>Brand : <Chip label={data.brandName} /></Typography>
+                        <Typography component={'h3'} variant='h6' sx={{ color: '#4fc4ca', fontWeight: 800, fontSize: '18px' }}>{t('Category')} : <Chip label={data.categoryName} /></Typography>
+                        <Typography component={'h3'} variant='h6' sx={{ color: '#4fc4ca', fontWeight: 800, fontSize: '18px' }}>{t('Brand')} : <Chip label={data.brandName} /></Typography>
                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                            <Typography component={'h3'} variant='h4' sx={{ color: '#4fc4ca', fontWeight: 800, fontSize: '18px' }}>Price</Typography>
+                            <Typography component={'h3'} variant='h4' sx={{ color: '#4fc4ca', fontWeight: 800, fontSize: '18px' }}>{t('Price')}</Typography>
                             <Typography component={'h3'} variant='h4' sx={{ fontWeight: 700, fontSize: '16px' }} color='textSecondary'>{data.price}$</Typography>
 
                         </Box>
                         <CardActions sx={{ p: 0, width: '100%' }}>
-                            <Button variant='contained' sx={{ backgroundColor: '#4fc4ca', color: '#312D5F', width: '100%' }} onClick={() => { addToCart(data.id) }}>Buy</Button>
+                            <Button variant='contained' sx={{ backgroundColor: '#4fc4ca', color: '#312D5F', width: '100%' }} onClick={() => { addToCart(data.id) }}>{t('Buy')}</Button>
                         </CardActions>
                     </CardContent>
 

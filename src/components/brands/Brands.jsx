@@ -10,9 +10,12 @@ import {
 } from '@mui/material';
 import AxiosInstanse from '../../api/AxiosInstanse';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 
 export default function Brands() {
   
+  const { t } = useTranslation();
+
   const fetchBrands = async ()=>{
     const response = await AxiosInstanse.get(`/Brands`);
     return response;
@@ -49,7 +52,7 @@ export default function Brands() {
         pt={6}
         sx={{ fontWeight: 800 }}
       >
-        Brands
+        {t('Brands')}
         <Divider sx={{width:'100px', backgroundColor:'#4fc4ca',mt:'4px',height:'2px'}}></Divider>
       </Typography>
       

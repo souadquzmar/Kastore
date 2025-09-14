@@ -8,9 +8,11 @@ import forgetPasswordSchema from '../../validations/ForgetPasswordSchema';
 import { Grid } from '@mui/material';
 import frame1 from "/src/assets/images/login_register/Frame1.svg"
 import AxiosAuthInstanse from '../../api/AxiosAuthInstanse';
+import { useTranslation } from 'react-i18next';
 
 export default function ForgetPassword() {
 
+    const {t} = useTranslation();
     const [serverError, setServerError] = useState("");
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm({
@@ -49,20 +51,20 @@ export default function ForgetPassword() {
                             my: 6,
                             px: 6
                         }}>
-                        <Typography component={"h1"} variant='h5' sx={{ color: "#312D5F", fontWeight: 800 }}>Step 1</Typography>
-                        <Typography component={"h1"} variant='h5' sx={{ fontWeight: 800 }}>Forget Password</Typography>
-                        <Typography component={"p"} sx={{ mt: 2 }} color='textSecondery'>Please enter your email and we’ll send you a recovery code.</Typography>
+                        <Typography component={"h1"} variant='h5' sx={{ color: "#312D5F", fontWeight: 800 }}>{t('step_1')}</Typography>
+                        <Typography component={"h1"} variant='h5' sx={{ fontWeight: 800 }}>{t('forget_pass')}</Typography>
+                        <Typography component={"p"} sx={{ mt: 2 }} color='textSecondery'>{t('please_enter_email')}</Typography>
 
-                        <TextField {...register("email")} id="email" label="Email" variant="outlined" error={errors.email} helperText={errors.email?.message} />
+                        <TextField {...register("email")} id="email" label={t('Email')} variant="outlined" error={errors.email} helperText={errors.email?.message} />
                         {serverError && (
                             <Alert severity="error">{serverError}</Alert>
                         )}
                         <Button variant="contained" type='submit' sx={{ background: "#4fc4ca", color: "#312D5F", borderRadius: 2 }} disabled={isLoading}>
-                            {isLoading ? <CircularProgress /> : "Send Code"}
+                            {isLoading ? <CircularProgress /> : `${t('send_code')}`}
                         </Button>
                         <Box sx={{ display: "flex", justifyContent: "center" }}>
-                            <Typography component={"p"} sx={{ mr: 1 }}>Remembered your password?</Typography>
-                            <Link underline='none' sx={{ color: "#6862A0" }} component={RouterLink} to={'/login'}>Login</Link>
+                            <Typography component={"p"} sx={{ mr: 1 }}>{t('remembered_pass?')}</Typography>
+                            <Link underline='none' sx={{ color: "#6862A0" }} component={RouterLink} to={'/login'}> {t('login')}</Link>
 
                         </Box>
                     </Grid>

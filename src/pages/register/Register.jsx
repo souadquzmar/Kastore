@@ -10,8 +10,10 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import frame1 from "/src/assets/images/login_register/Frame1.svg";
 import AxiosAuthInstanse from '../../api/AxiosAuthInstanse';
 import { Slide, toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 export default function Register() {
 
+    const {t} = useTranslation();
     const [serverError, setServerError] = useState("");
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm({
@@ -23,7 +25,7 @@ export default function Register() {
         try {
             const response = await AxiosAuthInstanse.post(`/Register`, data);
             if (response.status == 200){
-                toast.success('Account Created Successfully!', {
+                toast.success(t('acc_created_successfully'), {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -62,22 +64,22 @@ export default function Register() {
                             px: 10,
                             height:'100%'
                         }}>
-                        <Typography component={"h1"} variant='h5' sx={{ fontWeight: 600 }}>Create New Account</Typography>
-                        <Typography component={"p"} color='textSecondery'>Join us to track orders, save favorites, and get special offers.</Typography>
-                        <TextField {...register("fullName")} id="fullName" label="Full Name" variant="outlined" error={errors.fullName} helperText={errors.fullName?.message} />
-                        <TextField {...register("userName")} id="userName" label="User Name" variant="outlined" error={errors.userName} helperText={errors.userName?.message} />
-                        <TextField {...register("email")} id="email" label="Email" variant="outlined" error={errors.email} helperText={errors.email?.message} />
-                        <TextField {...register("password")} id="password" label="Password" variant="outlined" error={errors.password} helperText={errors.password?.message} />
-                        <TextField {...register("phoneNumber")} id="phoneNumber" label="Phone Number" variant="outlined" error={errors.phoneNumber} helperText={errors.phoneNumber?.message} />
+                        <Typography component={"h1"} variant='h5' sx={{ fontWeight: 600 }}>{t('create_new_acc')}</Typography>
+                        <Typography component={"p"} color='textSecondery'>{t('join_us_create_acc')}</Typography>
+                        <TextField {...register("fullName")} id="fullName" label={t('full_name')} variant="outlined" error={errors.fullName} helperText={errors.fullName?.message} />
+                        <TextField {...register("userName")} id="userName" label={t('user_name')} variant="outlined" error={errors.userName} helperText={errors.userName?.message} />
+                        <TextField {...register("email")} id="email" label={t('Email')} variant="outlined" error={errors.email} helperText={errors.email?.message} />
+                        <TextField {...register("password")} id="password" label={t('Password')} variant="outlined" error={errors.password} helperText={errors.password?.message} />
+                        <TextField {...register("phoneNumber")} id="phoneNumber" label={t('phone_num')} variant="outlined" error={errors.phoneNumber} helperText={errors.phoneNumber?.message} />
                         {serverError && (
                             <Alert severity="error">{serverError}</Alert>
                         )}
                         <Button variant="contained" type='submit' sx={{ background: "#4fc4ca", color: "#312D5F", borderRadius: 2 }} disabled={isLoading}>
-                            {isLoading ? <CircularProgress /> : "Create New Account"}
+                            {isLoading ? <CircularProgress /> : `${t('create_new_acc')}`}
                         </Button>
                         <Box sx={{ display: "flex", justifyContent: "center" }}>
-                            <Typography component={"p"} sx={{ mr: 1 }}>Already have an Account?</Typography>
-                            <Link underline='none' sx={{ color: "#6862A0" }} component={RouterLink} to={'/login'}>Login</Link>
+                            <Typography component={"p"} sx={{ mr: 1 }}>{t('already_have_acc?')} </Typography>
+                            <Link underline='none' sx={{ color: "#6862A0" }} component={RouterLink} to={'/login'}>{t('login')} </Link>
 
                         </Box>
                     </Grid>

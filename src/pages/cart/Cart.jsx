@@ -8,9 +8,11 @@ import AddIcon from '@mui/icons-material/Add'
 import AxiosUserInstanse from '../../api/AxiosUserInstanse';
 import { useQuery } from '@tanstack/react-query';
 import { Slide, toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 export default function Cart() {
 
+  const {t} = useTranslation();
 
   const fetchProducts = async () => {
     const response = await AxiosUserInstanse.get(`/Carts`);
@@ -28,7 +30,7 @@ export default function Cart() {
     try {
       const response = await AxiosUserInstanse.delete(`/Carts/${productId}`);
       if (response.status == 200) {
-        toast.success('Product Deleted Successfully!', {
+        toast.success(t('product_deleted_successfully'), {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -42,7 +44,7 @@ export default function Cart() {
         refetch();
       }
       else{
-        toast.error('Something Wrong Happened!', {
+        toast.error(t('smth_wrong'), {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -63,7 +65,7 @@ export default function Cart() {
     try {
       const response = await AxiosUserInstanse.delete(`/Carts/clear`);
       if (response.status == 200) {
-        toast.success('Cart Cleared Successfully!', {
+        toast.success(t('cart_cleared_successfully'), {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -77,7 +79,7 @@ export default function Cart() {
         refetch();
       }
       else{
-        toast.error('Something Wrong Happened!', {
+        toast.error(t('smth_wrong'), {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -135,7 +137,7 @@ export default function Cart() {
   return (
     <Box sx={{ height: '100vh' }} py={8}>
       <Container>
-        <Typography component={'h2'} variant='h5' sx={{ fontWeight: 700, pb: 2 }}>Cart</Typography>
+        <Typography component={'h2'} variant='h5' sx={{ fontWeight: 700, pb: 2 }}>{t('Cart')}</Typography>
         {data.data.items.map((product) => (
 
           <Card sx={{
@@ -152,12 +154,12 @@ export default function Cart() {
           }} >
             <CardContent sx={{ flexGrow: 1 }}>
               <Typography component={'h2'} variant='h6' sx={{ fontSize: '18px', color: '#4fc4ca', fontWeight: 800 }}>{product.productName}</Typography>
-              <Typography component={'h2'} variant='h6' sx={{ fontSize: '16px' }} color='textSecondary'>Price : {product.price}$</Typography>
-              <Typography component={'h2'} variant='h' sx={{ fontSize: '20px' }}>Total Price : {product.totalPrice}$</Typography>
+              <Typography component={'h2'} variant='h6' sx={{ fontSize: '16px' }} color='textSecondary'>{t('Price')} : {product.price}$</Typography>
+              <Typography component={'h2'} variant='h' sx={{ fontSize: '20px' }}>{t('total_price')} : {product.totalPrice}$</Typography>
             </CardContent>
             <CardActions sx={{ display: 'flex', flexDirection: 'column', justifyContent: "flex-start", gap: 2 }}>
-              <Button startIcon={<DeleteIcon />} color='error' onClick={() => { removeItem(product.productId) }}>
-                Delete
+              <Button sx={{gap:1}} startIcon={<DeleteIcon />} color='error' onClick={() => { removeItem(product.productId) }}>
+                {t('delete')}
               </Button>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, border: '1px solid rgba(219, 219, 219, 0.87)', borderRadius: 3 }}>
                 <Button sx={{ color: '#4fc4ca', minWidth: 'auto' }} onClick={product.count == 1 ? () => { removeItem(product.productId) } : () => { decItem(product.productId) }}><RemoveIcon sx={{ fontWeight: 900 }} /></Button>
@@ -169,9 +171,9 @@ export default function Cart() {
 
         ))}
         <Box sx={{ display: 'flex', alignItems: 'center', py: 4 }}>
-          <Typography component={'h2'} variant='h' sx={{ fontSize: '20px', flexGrow: 1 }}>Cart Total : {data.data.cartTotal}$</Typography>
+          <Typography component={'h2'} variant='h' sx={{ fontSize: '20px', flexGrow: 1 }}>{t('cart_total')} : {data.data.cartTotal}$</Typography>
           <Button variant='outlined' color='error' onClick={() => { clearCart() }}>
-            Clear Cart
+            {t('clear_cart')}
           </Button>
         </Box>
       </Container>

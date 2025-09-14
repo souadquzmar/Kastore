@@ -11,6 +11,7 @@ import { ToastContainer } from 'react-toastify';
 import darkTheme from './Theme.jsx';
 import { ThemeContext } from '@emotion/react';
 import ThemeContextProvider from './context/ThemeContext.jsx';
+import './i18n.jsx';
 
 createRoot(document.getElementById('root')).render(
     <>

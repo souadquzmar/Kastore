@@ -10,9 +10,11 @@ import {
 import { Link as RouterLink } from "react-router-dom";
 import AxiosInstanse from "../../api/AxiosInstanse";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 
 export default function Products() {
 
+  const {t} = useTranslation();
 
   const fetchProducts = async () => {
       const response = await AxiosInstanse.get(`/Products`);
@@ -50,7 +52,7 @@ export default function Products() {
         pt={6}
         sx={{ fontWeight: 800 }}
       >
-        Products
+        {t('Products')}
         <Divider
           sx={{
             width: "130px",
@@ -134,7 +136,7 @@ export default function Products() {
                     },
                   }}
                 >
-                  Details
+                  {t('Details')}
                 </Link>
               </CardActions>
             </Card>

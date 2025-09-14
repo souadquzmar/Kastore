@@ -9,8 +9,10 @@ import { Grid } from '@mui/material';
 import frame2 from "/src/assets/images/login_register/Frame2.svg";
 import AxiosAuthInstanse from '../../api/AxiosAuthInstanse';
 import { Slide, toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 export default function Login() {
 
+    const {t} = useTranslation();
     const [serverError, setServerError] = useState("");
     const { setIsLoggedIn } = useOutletContext();
     const navigate = useNavigate();
@@ -25,7 +27,7 @@ export default function Login() {
             if (response.status == 200) {
                 localStorage.setItem("userToken", response.data.token);
                 setIsLoggedIn(true);
-                toast.success('Logged In Successfully!', {
+                toast.success(t('logged_in_successfully'), {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -64,20 +66,20 @@ export default function Login() {
                             p: 6,
 
                         }}>
-                        <Typography component={"h1"} variant='h5' sx={{ fontWeight: 600 }}>Login Page</Typography>
-                        <Typography component={"p"} color='textSecondery'>Good to see you again!</Typography>
-                        <TextField {...register("email")} id="email" label="Email" variant="outlined" error={errors.email} helperText={errors.email?.message} />
-                        <TextField {...register("password")} id="password" label="Password" variant="outlined" error={errors.password} helperText={errors.password?.message} />
+                        <Typography component={"h1"} variant='h5' sx={{ fontWeight: 600 }}>{t('login_page')}</Typography>
+                        <Typography component={"p"} color='textSecondery'>{t('good_to_see_u_again')}</Typography>
+                        <TextField {...register("email")} id="email" label={t('Email')} variant="outlined" error={errors.email} helperText={errors.email?.message} />
+                        <TextField {...register("password")} id="password" label={t('Password')} variant="outlined" error={errors.password} helperText={errors.password?.message} />
                         {serverError && (
                             <Alert severity="error">{serverError}</Alert>
                         )}
-                        <Link underline='none' sx={{ color: "#6862A0" }} component={RouterLink} to={'/forgetPassword'}>Forget Password?</Link>
+                        <Link underline='none' sx={{ color: "#6862A0" }} component={RouterLink} to={'/forgetPassword'}>{t('forget_pass?')}</Link>
                         <Button variant="contained" type='submit' sx={{ background: "#4fc4ca", color: "#312D5F", borderRadius: 2 }} disabled={isLoading}>
-                            {isLoading ? <CircularProgress /> : "Login"}
+                            {isLoading ? <CircularProgress /> : `${t('login')}`}
                         </Button>
                         <Box sx={{ display: "flex", justifyContent: "center" }}>
-                            <Typography component={"p"} sx={{ mr: 1 }}>Don’t Have an Account?</Typography>
-                            <Link underline='none' sx={{ color: "#6862A0" }} component={RouterLink} to={'/register'}>Create Account</Link>
+                            <Typography component={"p"} sx={{ mr: 1 }}>{t('dont_have_acc?')}</Typography>
+                            <Link underline='none' sx={{ color: "#6862A0" }} component={RouterLink} to={'/register'}>{t('create_acc')}</Link>
 
                         </Box>
                     </Grid>

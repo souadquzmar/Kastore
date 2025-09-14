@@ -8,8 +8,11 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import AxiosInstanse from '../../api/AxiosInstanse';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 
 export default function Categories() {
+
+  const { t } = useTranslation();
   const fetchCategories = async () => {
 
     const response = await AxiosInstanse.get(`/Categories`);
@@ -47,7 +50,7 @@ export default function Categories() {
         pb={3}
         sx={{ fontWeight: 800 }}
       >
-        Categories
+        {t('Categories')}
         <Divider sx={{ width: '150px', backgroundColor: '#AE75DA', mt: '4px', height: '2px' }}></Divider>
       </Typography>
 

@@ -9,8 +9,10 @@ import { Grid } from '@mui/material';
 import frame2 from "/src/assets/images/login_register/Frame2.svg";
 import AxiosAuthInstanse from '../../api/AxiosAuthInstanse';
 import { Slide, toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 export default function ResetPassword() {
 
+    const {t} = useTranslation();
     const [serverError, setServerError] = useState("");
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm({
@@ -22,7 +24,7 @@ export default function ResetPassword() {
         try {
             const response = await AxiosAuthInstanse.patch(`/reset-password`, data);
             if (response.status == 200){
-                toast.success('Password Reset Successfully!', {
+                toast.success(t('pass_reset_successfully'), {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -61,23 +63,23 @@ export default function ResetPassword() {
                             px: 10,
                             height: '100%'
                         }}>
-                        <Typography component={"h1"} variant='h5' sx={{ color: "#312D5F", fontWeight: 800 }}>Step 2</Typography>
-                        <Typography component={"h1"} variant='h5' sx={{ fontWeight: 800 }}>Reset Password</Typography>
-                        <Typography component={"p"} sx={{ mt: 2 }} color='textSecondery'>We have sent OTP code via email, please enter it below to reset your password.</Typography>
+                        <Typography component={"h1"} variant='h5' sx={{ color: "#312D5F", fontWeight: 800 }}>{t('step_2')}</Typography>
+                        <Typography component={"h1"} variant='h5' sx={{ fontWeight: 800 }}>{t('reset_pass')} </Typography>
+                        <Typography component={"p"} sx={{ mt: 2 }} color='textSecondery'>{t('code_sent_to_email_to_reset')}</Typography>
 
 
-                        <TextField {...register("email")} id="email" label="Email" variant="outlined" error={errors.email} helperText={errors.email?.message} />
-                        <TextField {...register("newPassword")} id="newPassword" label="New Password" variant="outlined" error={errors.newPassword} helperText={errors.newPassword?.message} />
-                        <TextField {...register("code")} id="code" label="Code" variant="outlined" error={errors.code} helperText={errors.code?.message} />
+                        <TextField {...register("email")} id="email" label={t('Email')} variant="outlined" error={errors.email} helperText={errors.email?.message} />
+                        <TextField {...register("newPassword")} id="newPassword" label={t('new_pass')} variant="outlined" error={errors.newPassword} helperText={errors.newPassword?.message} />
+                        <TextField {...register("code")} id="code" label={t('code')} variant="outlined" error={errors.code} helperText={errors.code?.message} />
                         {serverError && (
                             <Alert severity="error">{serverError}</Alert>
                         )}
                         <Button variant="contained" type='submit' sx={{ background: "#4fc4ca", color: "#312D5F", borderRadius: 2 }} disabled={isLoading}>
-                            {isLoading ? <CircularProgress /> : "Reset"}
+                            {isLoading ? <CircularProgress /> : `${t('reset')}`}
                         </Button>
                         <Box sx={{ display: "flex", justifyContent: "center" }}>
-                            <Typography component={"p"} sx={{ mr: 1 }}>Remembered your password?</Typography>
-                            <Link underline='none' sx={{ color: "#6862A0" }} component={RouterLink} to={'/login'}>Login</Link>
+                            <Typography component={"p"} sx={{ mr: 1 }}>{t('remembered_pass?')}</Typography>
+                            <Link underline='none' sx={{ color: "#6862A0" }} component={RouterLink} to={'/login'}>{t('login')}</Link>
 
                         </Box>
                     </Grid>
