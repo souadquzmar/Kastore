@@ -3,7 +3,7 @@ import { Card, CardActions, CardMedia, Chip, CircularProgress, Container, Grid, 
 import { Box } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useOutletContext, useParams } from 'react-router-dom'
 import AxiosInstanse from '../../api/AxiosInstanse';
 import AxiosUserInstanse from '../../api/AxiosUserInstanse';
 import { useQuery } from '@tanstack/react-query';
@@ -12,7 +12,8 @@ import { useTranslation } from 'react-i18next';
 
 export default function ProductDetails() {
 
-    const {t} = useTranslation();
+    const { isLoggedIn } = useOutletContext();
+    const { t } = useTranslation();
     const { id } = useParams();
 
     const fetchProduct = async () => {
@@ -59,7 +60,17 @@ export default function ProductDetails() {
 
             }
         } catch (error) {
-            console.log(error);
+            toast.error(error.response.data.error, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Slide,
+            });
         }
     }
 
@@ -104,9 +115,11 @@ export default function ProductDetails() {
                             <Typography component={'h3'} variant='h4' sx={{ fontWeight: 700, fontSize: '16px' }} color='textSecondary'>{data.price}$</Typography>
 
                         </Box>
-                        <CardActions sx={{ p: 0, width: '100%' }}>
-                            <Button variant='contained' sx={{ backgroundColor: '#4fc4ca', color: '#312D5F', width: '100%' }} onClick={() => { addToCart(data.id) }}>{t('Buy')}</Button>
-                        </CardActions>
+                        {isLoggedIn ?
+                            <CardActions sx={{ p: 0, width: '100%' }}>
+                                <Button variant='contained' sx={{ backgroundColor: '#4fc4ca', color: '#312D5F', width: '100%' }} onClick={() => { addToCart(data.id) }}>{t('Buy')}</Button>
+                            </CardActions> : null
+                        }
                     </CardContent>
 
                 </Card>

@@ -11,7 +11,7 @@ export default function MainLayout() {
     <>
     <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
     <Container>
-        <Outlet context={{setIsLoggedIn}}/>
+        <Outlet context={{isLoggedIn, setIsLoggedIn}}/>
     </Container>
     <Footer/>
     </>
