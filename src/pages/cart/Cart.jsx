@@ -6,12 +6,14 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add'
 import AxiosUserInstanse from '../../api/AxiosUserInstanse';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Slide, toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 export default function Cart() {
 
+  const queryClient = useQueryClient();
   const {t} = useTranslation();
 
   const fetchProducts = async () => {
@@ -19,7 +21,7 @@ export default function Cart() {
     return response;
   };
   const { data, isLoading, isError, error, refetch } = useQuery({
-    queryKey: ['Products'],
+    queryKey: ['cartItems'],
     queryFn: fetchProducts,
     staleTime: 1000
 
@@ -41,7 +43,7 @@ export default function Cart() {
           theme: "light",
           transition: Slide,
         });
-        refetch();
+        queryClient.invalidateQueries(['cartItems']);
       }
       else{
         toast.error(t('smth_wrong'), {
@@ -76,7 +78,7 @@ export default function Cart() {
           theme: "light",
           transition: Slide,
         });
-        refetch();
+        queryClient.invalidateQueries(['cartItems']);
       }
       else{
         toast.error(t('smth_wrong'), {
@@ -100,7 +102,7 @@ export default function Cart() {
     try {
       const response = await AxiosUserInstanse.post(`/Carts/increment/${productId}`, {});
       if (response.status == 200) {
-        refetch();
+        queryClient.invalidateQueries(['cartItems']);
       }
     } catch (error) {
       console.log(error);
@@ -111,7 +113,7 @@ export default function Cart() {
     try {
       const response = await AxiosUserInstanse.post(`/Carts/decrement/${productId}`, {});
       if (response.status == 200) {
-        refetch();
+        queryClient.invalidateQueries(['cartItems']);
       }
     } catch (error) {
       console.log(error);
@@ -135,12 +137,12 @@ export default function Cart() {
   }
 
   return (
-    <Box sx={{ height: '100vh' }} py={8}>
+    <Box  py={8}>
       <Container>
         <Typography component={'h2'} variant='h5' sx={{ fontWeight: 700, pb: 2 }}>{t('Cart')}</Typography>
         {data.data.items.map((product) => (
 
-          <Card sx={{
+          <Card key={product.productId} sx={{
             p: 2,
             boxShadow: 'none',
             borderBottom: '1px solid #d4d0d0ff',
@@ -170,8 +172,11 @@ export default function Cart() {
           </Card>
 
         ))}
-        <Box sx={{ display: 'flex', alignItems: 'center', py: 4 }}>
-          <Typography component={'h2'} variant='h' sx={{ fontSize: '20px', flexGrow: 1 }}>{t('cart_total')} : {data.data.cartTotal}$</Typography>
+        <Box sx={{ display: 'flex', alignItems: 'flex-end', py: 4 ,gap:2}}>
+          <Box sx={{flexGrow:1 , display:'flex' , flexDirection:'column' , gap:2}} >
+            <Typography component={'h2'} variant='h' sx={{ fontSize: '20px' }}>{t('cart_total')} : {data.data.cartTotal}$</Typography>
+            <Button variant='contained' sx={{ backgroundColor: '#4fc4ca', color: '#312D5F', width: '100%' }} component={Link} to='/checkout'>{t('checkout')}</Button>
+          </Box>
           <Button variant='outlined' color='error' onClick={() => { clearCart() }}>
             {t('clear_cart')}
           </Button>

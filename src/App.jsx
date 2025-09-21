@@ -1,6 +1,8 @@
 import React from 'react'
 import { Router, RouterProvider } from 'react-router-dom'
 import router from './router'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+
 import {
   useQuery,
   useMutation,
@@ -14,6 +16,7 @@ export default function App() {
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
       <RouterProvider router={router} />
     </QueryClientProvider>
    

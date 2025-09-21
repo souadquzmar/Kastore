@@ -68,5 +68,12 @@
     "logged_in_successfully":"Logged In Successfully!",
     "acc_created_successfully":"Account Created Successfully!",
     "pass_reset_successfully":"Password Reset Successfully!",
-    "logged_out_successfully":"Logged Out Successfully!"
+    "logged_out_successfully":"Logged Out Successfully!",
+    "checkout":"Proceed to checkout",
+    "Checkout":"Checkout",
+    "summary":"Summary",
+    "payment_method":"Payment Method",
+    "cash":"Cash",
+    "visa":"Visa",
+    "pay":"Pay Now"
 }

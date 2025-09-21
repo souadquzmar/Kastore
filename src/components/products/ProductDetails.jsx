@@ -6,12 +6,13 @@ import React, { useEffect, useState } from 'react'
 import { useOutletContext, useParams } from 'react-router-dom'
 import AxiosInstanse from '../../api/AxiosInstanse';
 import AxiosUserInstanse from '../../api/AxiosUserInstanse';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Slide, toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 
 export default function ProductDetails() {
 
+    const queryClient = useQueryClient();
     const { isLoggedIn } = useOutletContext();
     const { t } = useTranslation();
     const { id } = useParams();
@@ -42,7 +43,7 @@ export default function ProductDetails() {
                     theme: "light",
                     transition: Slide,
                 });
-
+                queryClient.invalidateQueries(['cartItems']);
             }
 
             else {

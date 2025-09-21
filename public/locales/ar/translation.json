@@ -68,7 +68,12 @@
   "logged_in_successfully": "تم تسجيل الدخول بنجاح !",
   "acc_created_successfully": "تم إنشاء الحساب بنجاح !",
   "pass_reset_successfully": "تمت إعادة تعيين كلمة المرور بنجاح !",
-  "logged_out_successfully": "تم تسجيل الخروج بنجاح !"
+  "logged_out_successfully": "تم تسجيل الخروج بنجاح !",
+  "checkout": "المتابعة إلى الدفع",
+  "Checkout": "الدفع",
+  "summary": "ملخص الطلب",
+  "payment_method": "طريقة الدفع",
+  "cash": "نقداً",
+  "visa": "فيزا",
+  "pay": "ادفع الآن"
 }
-
-

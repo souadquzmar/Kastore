@@ -8,6 +8,7 @@ import ForgetPassword from "./pages/forget-password/ForgetPassword";
 import ResetPassword from "./pages/reset-password/ResetPassword";
 import ProductDetails from "./components/products/ProductDetails";
 import ProtectedRouter from "./components/protected/ProtectedRouter";
+import Checkout from "./pages/checkout/Checkout";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,13 @@ const router = createBrowserRouter([
         },{
             path:'/productDetails/:id',
             element:<ProductDetails/>
+        },{
+            path:'/checkout',
+            element:
+            <ProtectedRouter>
+                <Checkout />
+            </ProtectedRouter>
+            
         }
     ]
   },

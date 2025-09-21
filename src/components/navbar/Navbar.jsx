@@ -28,6 +28,8 @@ import LanguageIcon from "@mui/icons-material/Language";
 import i18next from "i18next";
 import { useState } from "react";
 import { useEffect } from "react";
+import AxiosUserInstanse from "../../api/AxiosUserInstanse";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
     const [lang, setLang] = useState(i18next.language);
@@ -66,6 +68,18 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
         navigate("/login");
     };
 
+    const fetchProducts = async ()=>{
+        const response = await AxiosUserInstanse.get(`/Carts`);
+        return response;
+    }
+
+    const {data} = useQuery({
+        queryKey:['cartItems'],
+        queryFn:fetchProducts,
+        staleTime:1000 * 60 * 5
+    })
+
+    const cartCount = data?.data.items.length;
     return (
         <AppBar position="static" sx={{ backgroundColor: "#4FC4CA" }}>
             <Container maxWidth="xl">
@@ -184,7 +198,7 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
                                             width: "100%",
                                         }}
                                     >
-                                        {t("Cart")}
+                                        {t("Cart")} {cartCount}
                                     </div>
                                 </MenuItem>
                             ) : null}
@@ -331,7 +345,7 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
                                     mr: 5,
                                 }}
                             >
-                                {t("Cart")}
+                                {t("Cart")} {cartCount}
                             </Button>
                         ) : null}
                         </Box>
