@@ -10,7 +10,7 @@ export default function Checkout() {
     const { register, control, handleSubmit } = useForm({});
     const { t } = useTranslation();
     const fetchProducts = async () => {
-        const response = await AxiosUserInstanse.get(`/Carts`);
+        const response = await AxiosUserInstanse.get(`/Customer/Carts`);
         return response;
     }
 
@@ -23,7 +23,7 @@ export default function Checkout() {
     const cartCount = data?.data.items.length;
     const cartItems = data?.data.items;
     const onSubmit = async (formData) => {
-        const response = await AxiosUserInstanse.post(`/CheckOut/payment`, {
+        const response = await AxiosUserInstanse.post(`/Customer/CheckOut/payment`, {
             paymentMethod: formData.paymentMethod
         });
 
@@ -51,7 +51,7 @@ export default function Checkout() {
             <Container>
                 <Typography component={'h2'} variant='h5' sx={{ fontWeight: 700, pb: 2 }}>{t('Checkout')}</Typography>
                 <Box>
-                    <Box sx={{ backgroundColor: '#EDEDED', p: 4, border: '1px solid #ededed', borderRadius: 5 }} >
+                    <Box sx={{ backgroundColor: '#EDEDED', p: 4, border: '2px solid #b2b0b0ff', borderRadius: 5 }} >
                         <Typography component={'h2'} variant='h6' sx={{ fontWeight: 700, pb: 2 }}>{t('summary')}</Typography>
                         {cartItems.map((product) => (
 
@@ -68,9 +68,9 @@ export default function Checkout() {
                                 <Typography component={'h2'} variant='h' sx={{ fontSize: '18px' }}>{product.totalPrice}$</Typography>
                             </Box>
                         ))}
-                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                            <Typography component={'h2'} variant='h' sx={{ fontSize: '20px', borderTop: '1px solid #d4d0d0ff', pt: 3, flexGrow: 1 }}>{t('cart_total')}</Typography>
-                            <Typography component={'h2'} variant='h' sx={{ fontSize: '20px', borderTop: '1px solid #d4d0d0ff', pt: 3 }}>{data.data.cartTotal}$</Typography>
+                        <Box sx={{ display: 'flex', alignItems: 'center' ,borderTop: '1px solid #b2b0b0ff'}}>
+                            <Typography component={'h2'} variant='h' sx={{ fontSize: '20px', pt: 3, flexGrow: 1 }}>{t('cart_total')}</Typography>
+                            <Typography component={'h2'} variant='h' sx={{ fontSize: '20px', pt: 3 }}>{data.data.cartTotal}$</Typography>
                         </Box>
 
                     </Box>

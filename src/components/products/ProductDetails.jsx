@@ -18,7 +18,7 @@ export default function ProductDetails() {
     const { id } = useParams();
 
     const fetchProduct = async () => {
-        const response = await AxiosInstanse.get(`/Products/${id}`);
+        const response = await AxiosInstanse.get(`/Customer/Products/${id}`);
         return response.data;
     }
 
@@ -30,7 +30,7 @@ export default function ProductDetails() {
 
     const addToCart = async (id) => {
         try {
-            const response = await AxiosUserInstanse.post(`/Carts`, { productId: id });
+            const response = await AxiosUserInstanse.post(`/Customer/Carts`, { productId: id });
             if (response.status == 200) {
                 toast.success(t('product_added_successfully'), {
                     position: "top-right",

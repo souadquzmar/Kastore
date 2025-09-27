@@ -69,7 +69,7 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
     };
 
     const fetchProducts = async ()=>{
-        const response = await AxiosUserInstanse.get(`/Carts`);
+        const response = await AxiosUserInstanse.get(`/Customer/Carts`);
         return response;
     }
 
