@@ -79,5 +79,8 @@
     "profile":"Profile",
     "my_profile":"My Profile",
     "my_orders":"My Orders",
-    "settings":"Settings"
+    "settings":"Settings",
+    "empty_cart":"Your cart is empty",
+    "fix_empty_cart":"Looks like you haven’t added anything yet. Let’s fix that!",
+    "shop_now":"Shop Now"
 }

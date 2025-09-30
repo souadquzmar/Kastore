@@ -10,6 +10,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Slide, toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 
 export default function Cart() {
 
@@ -136,6 +137,18 @@ export default function Cart() {
     );
   }
 
+  if(data.data.items.length === 0)
+    return (
+  <Box  p={20}>
+    <Container sx={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',gap:2}}>
+      <ShoppingCartOutlinedIcon sx={{fontSize:60}} color='action'/>
+      <Typography component={'h2'} variant='h5' color='textSecondary'>{t('empty_cart')}</Typography>
+      <Typography component={'h3'} variant='h4' sx={{ color: 'text.secondary', opacity: 0.6 ,fontSize:'19px'}}>{t('fix_empty_cart')}</Typography>
+      <Button variant='contained' sx={{ backgroundColor: '#4fc4ca', color: '#312D5F' }} component={Link} to='/'>{t('shop_now')}</Button>
+
+    </Container>
+  </Box>
+  );
   return (
     <Box  py={8}>
       <Container>
