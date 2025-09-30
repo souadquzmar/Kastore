@@ -10,8 +10,10 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import navImg from "/src/assets/images/navbar/Group.svg";
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { Link, Link as RouterLink, useNavigate } from "react-router-dom";
 import {
+    Badge,
     FormControl,
     InputAdornment,
     InputLabel,
@@ -30,18 +32,31 @@ import { useState } from "react";
 import { useEffect } from "react";
 import AxiosUserInstanse from "../../api/AxiosUserInstanse";
 import { useQuery } from "@tanstack/react-query";
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import PersonIcon from '@mui/icons-material/Person';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
     const [lang, setLang] = useState(i18next.language);
     const { t } = useTranslation();
     const { mode, toggleTheme } = useContext(ThemeContext);
     const [anchorElNav, setAnchorElNav] = React.useState(null);
+    const [anchorEl, setAnchorEl] = React.useState(null);
 
     const toggleLanguage = (event) => {
         const newLang = event.target.value;
         i18next.changeLanguage(newLang);
         setLang(newLang);
     };
+
+    const handleMenu = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
 
     useEffect(() => {
         window.document.dir = i18next.dir();
@@ -68,18 +83,27 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
         navigate("/login");
     };
 
-    const fetchProducts = async ()=>{
+    const fetchProfile = async () => {
+        const response = await AxiosUserInstanse.get(`/Users/profile`);
+        return response;
+    }
+
+    const { data: user } = useQuery({
+        queryKey: ['user'],
+        queryFn: fetchProfile,
+        staleTime: 1000 * 60 * 5
+    })
+    const fetchProducts = async () => {
         const response = await AxiosUserInstanse.get(`/Customer/Carts`);
         return response;
     }
 
-    const {data} = useQuery({
-        queryKey:['cartItems'],
-        queryFn:fetchProducts,
-        staleTime:1000 * 60 * 5
+    const { data: cart } = useQuery({
+        queryKey: ['cartItems'],
+        queryFn: fetchProducts,
+        staleTime: 1000 * 60 * 5
     })
-
-    const cartCount = data?.data.items.length;
+    const cartCount = cart?.data.items.length;
     return (
         <AppBar position="static" sx={{ backgroundColor: "#4FC4CA" }}>
             <Container maxWidth="xl">
@@ -189,42 +213,56 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
                                         justifyContent: "center",
                                     }}
                                 >
-                                    <div
-                                        style={{
-                                            color: "#16123F",
-                                            fontSize: "20px",
-                                            fontWeight: 600,
-                                            textAlign: "center",
-                                            width: "100%",
-                                        }}
-                                    >
-                                        {t("Cart")} {cartCount}
-                                    </div>
+                                    <IconButton component={RouterLink}
+                                        to="/cart"
+                                        onClick={handleCloseNavMenu}
+                                        size="large" aria-label="show cart items" color="inherit" sx={{ height: '50%', color: '#16123F', border: '1.5px solid #16123F', borderRadius: 2, p: 1, backgroundColor: '#ffffff', mr: 5 }} >
+                                        <Badge badgeContent={cartCount} color="error" >
+                                            <ShoppingCartOutlinedIcon />
+                                        </Badge>
+                                    </IconButton>
                                 </MenuItem>
                             ) : null}
 
                             {isLoggedIn ? (
                                 <MenuItem>
-                                    <Box sx={{ flexGrow: 0 }}>
-                                        <Button
-                                            onClick={() => {
-                                                handleLogout();
-                                            }}
-                                            style={{
-                                                backgroundColor: "#fff",
-                                                color: "#16123F",
-                                                textDecoration: "none",
-                                                padding: "8px 24px",
-                                                borderRadius: "16px",
-                                                fontWeight: 500,
-                                                display: "flex",
-                                                alignItems: "center",
-                                                justifyContent: "center",
-                                            }}
+                                    <div>
+                                        <IconButton
+                                            size="large"
+                                            aria-label="account of current user"
+                                            aria-controls="menu-appbar"
+                                            aria-haspopup="true"
+                                            onClick={handleMenu}
+                                            sx={{ color: '#16123F', border: '1.5px solid #16123F', borderRadius: 2, p: 1, backgroundColor: '#ffffff' }}
                                         >
-                                            {t("logout")}
-                                        </Button>
-                                    </Box>
+                                            <AccountCircle />
+                                        </IconButton>
+                                        <Menu
+                                            id="menu-appbar"
+                                            anchorEl={anchorEl}
+                                            anchorOrigin={{
+                                                vertical: 'top',
+                                                horizontal: 'right',
+                                            }}
+                                            keepMounted
+                                            transformOrigin={{
+                                                vertical: 'top',
+                                                horizontal: 'right',
+                                            }}
+                                            open={Boolean(anchorEl)}
+                                            onClose={handleClose}
+                                        >
+                                            <MenuItem onClick={handleClose}>
+                                                <Button color="text-secondery" component={RouterLink} to={`/profile`} sx={{ display: 'flex', gap: 1, alignItems: 'center' }}> <PersonIcon />{t(`profile`)} </Button>
+                                            </MenuItem>
+                                            <MenuItem onClick={handleClose}>
+                                                <Button onClick={() => {
+                                                    handleLogout();
+                                                }} color="text-secondery" sx={{ display: 'flex', gap: 1, alignItems: 'center' }} > <LogoutIcon /> {t(`logout`)} </Button>
+                                            </MenuItem>
+
+                                        </Menu>
+                                    </div>
                                 </MenuItem>
                             ) : (
                                 <Box sx={{ flexGrow: 0 }}>
@@ -285,7 +323,7 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
                             display: { xs: "none", md: "flex", alignItems: "center" },
                         }}
                     >
-                        <Box sx={{ display: 'flex', justifyContent: 'center', flexGrow: 1 }}>
+                        <Box sx={{ display: 'flex', justifyContent: 'center', flexGrow: 1, alignItems: 'center' }}>
                             <Button
                                 component={RouterLink}
                                 to="/"
@@ -331,26 +369,8 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
                             >
                                 {t("about_us")}
                             </Button>
-                            {isLoggedIn ? (
-                            <Button
-                                component={RouterLink}
-                                to="/cart"
-                                onClick={handleCloseNavMenu}
-                                sx={{
-                                    my: 2,
-                                    color: "#16123F",
-                                    display: "block",
-                                    fontWeight: 600,
-                                    fontSize: "16px",
-                                    mr: 5,
-                                }}
-                            >
-                                {t("Cart")} {cartCount}
-                            </Button>
-                        ) : null}
-                        </Box>
-                        
 
+                        </Box>
                         {isLoggedIn ? (
                             <Box
                                 sx={{
@@ -358,28 +378,57 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
                                     justifyContent: "flex-end",
                                     pr: 4,
                                     display: "flex",
-                                    ml:4
+                                    ml: 4
                                 }}
                             >
-                                <Button
-                                    onClick={() => {
-                                        handleLogout();
-                                    }}
-                                    style={{
-                                        backgroundColor: "#fff",
-                                        color: "#16123F",
-                                        textDecoration: "none",
-                                        padding: "8px 24px",
-                                        borderRadius: "16px",
-                                        fontWeight: 500,
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        ml:4
-                                    }}
-                                >
-                                    {t("logout")}
-                                </Button>
+
+                                <IconButton component={RouterLink}
+                                    to="/cart"
+                                    onClick={handleCloseNavMenu}
+                                    size="large" aria-label="show cart items" color="inherit" sx={{ height: '50%', color: '#16123F', border: '1.5px solid #16123F', borderRadius: 2, p: 1, backgroundColor: '#ffffff', mr: 2 }} >
+                                    <Badge badgeContent={cartCount} color="error" >
+                                        <ShoppingCartOutlinedIcon />
+                                    </Badge>
+                                </IconButton>
+
+                                <div>
+                                    <IconButton
+                                        size="large"
+                                        aria-label="account of current user"
+                                        aria-controls="menu-appbar"
+                                        aria-haspopup="true"
+                                        onClick={handleMenu}
+                                        sx={{ color: '#16123F', border: '1.5px solid #16123F', borderRadius: 2, p: 1, backgroundColor: '#ffffff', mr: 2 }}
+                                    >
+                                        <AccountCircle />
+                                    </IconButton>
+                                    <Menu
+                                        id="menu-appbar"
+                                        anchorEl={anchorEl}
+                                        anchorOrigin={{
+                                            vertical: 'top',
+                                            horizontal: 'right',
+                                        }}
+                                        keepMounted
+                                        transformOrigin={{
+                                            vertical: 'top',
+                                            horizontal: 'right',
+                                        }}
+                                        open={Boolean(anchorEl)}
+                                        onClose={handleClose}
+                                    >
+                                        <MenuItem onClick={handleClose}>
+                                            <Button color="text-secondery" component={RouterLink} to={`/profile`} sx={{ display: 'flex', gap: 1, alignItems: 'center' }}> <PersonIcon />{t(`profile`)} </Button>
+                                        </MenuItem>
+                                        <MenuItem onClick={handleClose}>
+                                            <Button onClick={() => {
+                                                handleLogout();
+                                            }} color="text-secondery" sx={{ display: 'flex', gap: 1, alignItems: 'center' }} > <LogoutIcon /> {t(`logout`)} </Button>
+                                        </MenuItem>
+
+                                    </Menu>
+                                </div>
+
                             </Box>
                         ) : (
                             <Box
@@ -390,7 +439,7 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
                                     flexDirection: { sm: "column", md: "row" },
                                     justifyContent: "flex-end",
                                     pr: 4,
-                                    ml:4
+                                    ml: 4
                                 }}
                             >
                                 <Link

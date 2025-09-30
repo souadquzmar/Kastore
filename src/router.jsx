@@ -9,49 +9,68 @@ import ResetPassword from "./pages/reset-password/ResetPassword";
 import ProductDetails from "./components/products/ProductDetails";
 import ProtectedRouter from "./components/protected/ProtectedRouter";
 import Checkout from "./pages/checkout/Checkout";
+import Profile from "./pages/profile/Profile";
+import ProfileLayout from "./layout/ProfileLayout";
+import Orders from "./pages/profile/Orders";
+import Info from "./pages/profile/Info";
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <MainLayout/>,
-    children:[
-        {
-            index:true,
-            element: <Home/>
-        },
-        {
-            path:'/register',
-            element:<Register/>
-        },
-        {
-            path:'/login',
-            element:<Login/>
-        },
-        {
-            path:'/cart',
-            element:
-            <ProtectedRouter>
-                <Cart/>
-            </ProtectedRouter>
-        },{
-            path:'/forgetPassword',
-            element:<ForgetPassword/>
-        },{
-            path:'/resetPassword',
-            element:<ResetPassword/>
-        },{
-            path:'/productDetails/:id',
-            element:<ProductDetails/>
-        },{
-            path:'/checkout',
-            element:
-            <ProtectedRouter>
-                <Checkout />
-            </ProtectedRouter>
-            
-        }
-    ]
-  },
+    {
+        path: "/",
+        element: <MainLayout />,
+        children: [
+            {
+                index: true,
+                element: <Home />
+            },
+            {
+                path: '/register',
+                element: <Register />
+            },
+            {
+                path: '/login',
+                element: <Login />
+            },
+            {
+                path: '/cart',
+                element:
+                    <ProtectedRouter>
+                        <Cart />
+                    </ProtectedRouter>
+            }, {
+                path: '/forgetPassword',
+                element: <ForgetPassword />
+            }, {
+                path: '/resetPassword',
+                element: <ResetPassword />
+            }, {
+                path: '/productDetails/:id',
+                element: <ProductDetails />
+            }, {
+                path: '/checkout',
+                element:
+                    <ProtectedRouter>
+                        <Checkout />
+                    </ProtectedRouter>
+
+            }
+        ]
+    }, {
+        path:'/profile',
+        element:
+         <ProtectedRouter>
+            <ProfileLayout/>
+         </ProtectedRouter>,
+         children:[
+           {
+                index: true,
+                element: <Info/>
+            },{
+                path:'orders',
+                element:<Orders/>
+            }
+         ]
+    }
 ]);
 
 export default router

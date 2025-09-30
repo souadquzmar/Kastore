@@ -75,5 +75,9 @@
     "payment_method":"Payment Method",
     "cash":"Cash",
     "visa":"Visa",
-    "pay":"Pay Now"
+    "pay":"Pay Now",
+    "profile":"Profile",
+    "my_profile":"My Profile",
+    "my_orders":"My Orders",
+    "settings":"Settings"
 }
