@@ -66,7 +66,7 @@ export default function Profile() {
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation">
       <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: 2 }}>
-        <Avatar sx={{ bgcolor: deepPurple[500], width: 50, height: 50 }}> {user.data.fullName[0].toUpperCase()}{user.data.fullName.split(' ')[1][0].toUpperCase()} </Avatar>
+        <Avatar sx={{ bgcolor: deepPurple[500], width: 50, height: 50 }}> {user.data.fullName[0].toUpperCase()}{user.data.fullName.split(' ')[1]?user.data.fullName.split(' ')[1][0].toUpperCase():null} </Avatar>
         <Typography>{user.data.fullName}</Typography>
       </Box>
       <Divider sx={{ borderBottomWidth: 2, pt: 3 }} />

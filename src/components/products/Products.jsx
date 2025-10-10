@@ -17,7 +17,7 @@ export default function Products() {
   const {t} = useTranslation();
 
   const fetchProducts = async () => {
-      const response = await AxiosInstanse.get(`/Customer/Products`);
+      const response = await AxiosInstanse.get(`/Customer/products?limit=10`);
       return response;
   };
 
@@ -64,7 +64,7 @@ export default function Products() {
       </Typography>
 
       <Grid container spacing={4}>
-        {data.data.map((product) => (
+        {data.data.data.map((product) => (
           <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
             <Card
               sx={{

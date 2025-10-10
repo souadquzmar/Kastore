@@ -82,5 +82,11 @@
     "settings":"Settings",
     "empty_cart":"Your cart is empty",
     "fix_empty_cart":"Looks like you haven’t added anything yet. Let’s fix that!",
-    "shop_now":"Shop Now"
+    "shop_now":"Shop Now",
+    "quantity":"Quantity",
+    "Reviews":"Reviews",
+    "add_review":"Add Review",
+    "product_rating":"Your rating for this product",
+    "submit_review":"Submit Review",
+    "review_added_successfully":"Review Added Successfully!"
 }
