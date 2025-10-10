@@ -13,6 +13,7 @@ import Profile from "./pages/profile/Profile";
 import ProfileLayout from "./layout/ProfileLayout";
 import Orders from "./pages/profile/Orders";
 import Info from "./pages/profile/Info";
+import Products from "./pages/products/Products";
 
 const router = createBrowserRouter([
     {
@@ -53,6 +54,9 @@ const router = createBrowserRouter([
                         <Checkout />
                     </ProtectedRouter>
 
+            },{
+                path:'/products/:page',
+                element:<Products />
             }
         ]
     }, {

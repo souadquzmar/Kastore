@@ -88,5 +88,10 @@
     "add_review":"Add Review",
     "product_rating":"Your rating for this product",
     "submit_review":"Submit Review",
-    "review_added_successfully":"Review Added Successfully!"
+    "review_added_successfully":"Review Added Successfully!",
+    "sortby":"Sort By",
+    "price_desc":"Price (high to low)",
+    "price_asc":"Price (low to high)",
+    "name_desc":"Name (Z to A)",
+    "name_asc":"Name (A to Z)"
 }

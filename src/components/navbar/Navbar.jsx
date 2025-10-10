@@ -162,7 +162,7 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
                             </MenuItem>
                             <MenuItem
                                 component={RouterLink}
-                                to={`/products`}
+                                to={`/products/1`}
                                 onClick={handleCloseNavMenu}
                                 disableTypography
                                 style={{
@@ -341,7 +341,7 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
                             </Button>
                             <Button
                                 component={RouterLink}
-                                to="/products"
+                                to="/products/1"
                                 onClick={handleCloseNavMenu}
                                 sx={{
                                     my: 2,
