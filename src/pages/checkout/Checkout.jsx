@@ -1,9 +1,10 @@
 import React from 'react'
 import AxiosUserInstanse from '../../api/AxiosUserInstanse'
 import { useQuery } from '@tanstack/react-query';
-import { Box, Button, Card, CardContent, CircularProgress, Container, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, CircularProgress, Container, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Slide, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Controller, useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 export default function Checkout() {
 
@@ -26,10 +27,6 @@ export default function Checkout() {
         const response = await AxiosUserInstanse.post(`/Customer/CheckOut/payment`, {
             paymentMethod: formData.paymentMethod
         });
-
-        if (response.status == 200) {
-            location.href = response.data.url;
-        }
     }
     if (isError) console.log(error);
 
@@ -83,11 +80,33 @@ export default function Checkout() {
                             height: '100%'
                         }}>
 
-                        <Controller control={control} name='paymentMethod' defaultValue={'Cash'}
+                        <Controller control={control} name='paymentMethod' defaultValue={'Visa'}
                             render={({ field }) => (
                                 <Box sx={{ backgroundColor: '#e0f7fa', p: 4, border: '1px solid #00acc1', borderRadius: 5, mt: 3 }} >
                                     <FormLabel> <Typography component={'h2'} variant='h6' sx={{ color: '#000', mb: 2 }}>{t('payment_method')}</Typography></FormLabel>
                                     <RadioGroup {...field} row>
+                                        <FormControlLabel
+                                            value="Visa"
+                                            control={<Radio sx={{ display: "none" }} />}
+                                            label={
+                                                <Box
+                                                    sx={{
+                                                        display: "flex",
+                                                        alignItems: "center",
+                                                        justifyContent: "space-between",
+                                                        px: 4,
+                                                        py: 1,
+                                                        borderRadius: "12px",
+                                                        bgcolor: field.value === "Visa" ? "#b2ebf2" : "#e0f7fa",
+                                                        border: field.value === "Visa" ? "2px solid #00acc1" : "2px solid transparent",
+                                                        cursor: "pointer",
+                                                    }}
+                                                >
+                                                    <Typography fontWeight="bold">{t("visa")}</Typography>
+                                                    <Radio checked={field.value === "Visa"} value="Visa" />
+                                                </Box>
+                                            }
+                                        />
                                         <FormControlLabel
                                             value="Cash"
                                             control={<Radio sx={{ display: "none" }} />}
@@ -111,28 +130,7 @@ export default function Checkout() {
                                             }
                                         />
 
-                                        <FormControlLabel
-                                            value="Visa"
-                                            control={<Radio sx={{ display: "none" }} />}
-                                            label={
-                                                <Box
-                                                    sx={{
-                                                        display: "flex",
-                                                        alignItems: "center",
-                                                        justifyContent: "space-between",
-                                                        px: 4,
-                                                        py: 1,
-                                                        borderRadius: "12px",
-                                                        bgcolor: field.value === "Visa" ? "#b2ebf2" : "#e0f7fa",
-                                                        border: field.value === "Visa" ? "2px solid #00acc1" : "2px solid transparent",
-                                                        cursor: "pointer",
-                                                    }}
-                                                >
-                                                    <Typography fontWeight="bold">{t("visa")}</Typography>
-                                                    <Radio checked={field.value === "Visa"} value="Visa" />
-                                                </Box>
-                                            }
-                                        />
+    
                                     </RadioGroup>
                                 </Box>
                             )}
