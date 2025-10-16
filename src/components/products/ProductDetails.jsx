@@ -223,7 +223,7 @@ export default function ProductDetails() {
                         </Box>
                         {isLoggedIn ?
                             <CardActions sx={{ p: 0, width: '100%' }}>
-                                <Button variant='contained' sx={{ backgroundColor: '#4fc4ca', color: '#312D5F', width: '100%' }} onClick={() => { addToCart(data.id) }}>{t('Buy')}</Button>
+                                <Button variant='contained' sx={(theme) => ({ backgroundColor: theme.palette.mode === "dark" ? "#1B9CA4" : "#4fc4ca", color: '#312D5F', width: '100%' })} onClick={() => { addToCart(data.id) }}>{t('Buy')}</Button>
                             </CardActions> : null
                         }
                     </CardContent>
@@ -271,7 +271,7 @@ export default function ProductDetails() {
                         rows={6}
                         {...register('comment', { required: 'Please write a review' })}
                     />
-                    <Button variant='contained' sx={{ backgroundColor: '#4fc4ca', color: '#312D5F', width: '15%' }} type='submit'>{t('submit_review')}</Button>
+                    <Button variant='contained' sx={(theme) =>({ backgroundColor: theme.palette.mode === "dark" ? "#1B9CA4" : "#4fc4ca", color: '#312D5F', width: '15%' })} type='submit'>{t('submit_review')}</Button>
                 </Card>
 
             </Container>

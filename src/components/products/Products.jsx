@@ -14,20 +14,20 @@ import { useTranslation } from "react-i18next";
 
 export default function Products() {
 
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   const fetchProducts = async () => {
-      const response = await AxiosInstanse.get(`/Customer/products?limit=10`);
-      return response;
+    const response = await AxiosInstanse.get(`/Customer/products?limit=10`);
+    return response;
   };
 
-  const {data,isLoading,isError,error} = useQuery({
-    queryKey:['products'],
-    queryFn:fetchProducts,
-    staleTime:1000*60*5
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ['products'],
+    queryFn: fetchProducts,
+    staleTime: 1000 * 60 * 5
   })
 
-  if(isError) console.log(error);
+  if (isError) console.log(error);
 
   if (isLoading) {
     return (
@@ -68,7 +68,7 @@ export default function Products() {
           <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
             <Card
               sx={{
-                border:0,
+                border: 0,
                 width: 240,
                 height: 480,
                 display: "flex",
@@ -88,36 +88,37 @@ export default function Products() {
                 image={product.mainImageUrl}
                 sx={{
                   width: "100%",
-                  borderRadius:2,
-                  objectFit: "cover", 
-                  
+                  borderRadius: 2,
+                  objectFit: "cover",
+
                 }}
               />
-              <CardContent sx={{px:2,pb:0,flexGrow:1,mb:0}}>
+              <CardContent sx={{ px: 2, pb: 0, flexGrow: 1, mb: 0 }}>
                 <Typography
                   gutterBottom
                   variant="h6"
                   component="div"
-                  sx={{ fontSize: "18px", fontWeight: 800,pb:0 }}
+                  sx={{ fontSize: "18px", fontWeight: 800, pb: 0 }}
                 >
                   {product.name.split(" ").slice(0, 4).join(" ")}
                 </Typography>
                 <Typography
                   variant="body2"
-                  sx={{ fontWeight: 700, fontSize: "20px", color: "#4fc4ca",mb:0 }}
+                  sx={(theme) => ({ fontWeight: 700, fontSize: "20px", color: theme.palette.mode === "dark" ? "#fffffff" : "#4fc4ca", mb: 0 })}
                 >
                   {product.price}$
                 </Typography>
               </CardContent>
-              <CardActions sx={{px:2,pt:0,mt:0,pb:3}}>
+              <CardActions sx={{ px: 2, pt: 0, mt: 0, pb: 3 }}>
                 <Link
                   variant="contained"
                   component={RouterLink}
                   to={`/productDetails/${product.id}`}
-                  sx={{
-                    border: "2px solid #4fc4ca",
-                    backgroundColor: "#4fc4ca",
-                    color: "#16123F",
+
+                  sx={(theme) => ({
+                    border: `2px solid ${theme.palette.mode === "dark" ? "#1B9CA4" : "#4fc4ca"}`,
+                    backgroundColor: theme.palette.mode === "dark" ? "#1B9CA4" : "#4fc4ca",
+                    color: theme.palette.mode === "dark" ? "#0E0E0E" : "#16123F",
                     textDecoration: "none",
                     padding: "8px 24px",
                     borderRadius: "5px",
@@ -126,15 +127,20 @@ export default function Products() {
                     alignItems: "center",
                     justifyContent: "center",
                     transition: "all 0.3s ease",
+
                     "&:hover": {
-                      borderColor: "#4fc4ca",
-                      color: "#4fc4ca",
+                      borderColor: theme.palette.mode === "dark" ? "#1B9CA4" : "#4fc4ca",
+                      color: theme.palette.mode === "dark" ? "#1B9CA4" : "#4fc4ca",
                       textDecoration: "none",
-                      backgroundColor: "#fff",
+                      backgroundColor:
+                        theme.palette.mode === "dark" ? "#151515" : "#fff",
                       transform: "translateY(-3px)",
-                      boxShadow: "0 6px 14px rgba(0,0,0,0.12)",
+                      boxShadow:
+                        theme.palette.mode === "dark"
+                          ? "0 6px 14px rgba(0,0,0,0.5)"
+                          : "0 6px 14px rgba(0,0,0,0.12)",
                     },
-                  }}
+                  })}
                 >
                   {t('Details')}
                 </Link>

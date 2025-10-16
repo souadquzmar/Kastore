@@ -13,15 +13,15 @@ export default function Products() {
     const [Page, setPage] = useState(page);
     const { t } = useTranslation();
     const fetchProducts = async ({ queryKey }) => {
-        const [, currPage,currSort] = queryKey;
+        const [, currPage, currSort] = queryKey;
         const skip = (currPage - 1) * 10;
-        const [sortBy,sortOrder] = currSort.split(' ');
+        const [sortBy, sortOrder] = currSort.split(' ');
         const response = await AxiosInstanse.get(`/Customer/products?limit=10&skip=${skip}&sortBy=${sortBy}&sortOrder=${sortOrder}`);
         return response;
     }
 
     const { data, error, isError, isLoading } = useQuery({
-        queryKey: ['products', Page ,sort],
+        queryKey: ['products', Page, sort],
         queryFn: fetchProducts,
         staleTime: 1000 * 60 * 5
     })
@@ -67,7 +67,7 @@ export default function Products() {
             </Typography>
             <Box pb={5} >
                 <FormControl variant="standard" sx={{ minWidth: 130 }}>
-                    <InputLabel id="sortSelection" sx={{display:'flex',alignItems:'center',gap:1}}><SortIcon/> {t(`sortby`)}</InputLabel>
+                    <InputLabel id="sortSelection" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}><SortIcon /> {t(`sortby`)}</InputLabel>
                     <Select
                         labelId="sortSelection"
                         id="sort"
@@ -123,7 +123,7 @@ export default function Products() {
                                 </Typography>
                                 <Typography
                                     variant="body2"
-                                    sx={{ fontWeight: 700, fontSize: "20px", color: "#4fc4ca", mb: 0 }}
+                                    sx={(theme) => ({ fontWeight: 700, fontSize: "20px", color: theme.palette.mode === "dark" ? "#ffffff" : "#4fc4ca", mb: 0 })}
                                 >
                                     {product.price}$
                                 </Typography>
@@ -133,10 +133,10 @@ export default function Products() {
                                     variant="contained"
                                     component={RouterLink}
                                     to={`/productDetails/${product.id}`}
-                                    sx={{
-                                        border: "2px solid #4fc4ca",
-                                        backgroundColor: "#4fc4ca",
-                                        color: "#16123F",
+                                    sx={(theme) => ({
+                                        border: `2px solid ${theme.palette.mode === "dark" ? "#1B9CA4" : "#4fc4ca"}`,
+                                        backgroundColor: theme.palette.mode === "dark" ? "#1B9CA4" : "#4fc4ca",
+                                        color: theme.palette.mode === "dark" ? "#0E0E0E" : "#16123F",
                                         textDecoration: "none",
                                         padding: "8px 24px",
                                         borderRadius: "5px",
@@ -145,15 +145,21 @@ export default function Products() {
                                         alignItems: "center",
                                         justifyContent: "center",
                                         transition: "all 0.3s ease",
+
                                         "&:hover": {
-                                            borderColor: "#4fc4ca",
-                                            color: "#4fc4ca",
+                                            borderColor: theme.palette.mode === "dark" ? "#1B9CA4" : "#4fc4ca",
+                                            color: theme.palette.mode === "dark" ? "#1B9CA4" : "#4fc4ca",
                                             textDecoration: "none",
-                                            backgroundColor: "#fff",
+                                            backgroundColor:
+                                                theme.palette.mode === "dark" ? "#151515" : "#fff",
                                             transform: "translateY(-3px)",
-                                            boxShadow: "0 6px 14px rgba(0,0,0,0.12)",
+                                            boxShadow:
+                                                theme.palette.mode === "dark"
+                                                    ? "0 6px 14px rgba(0,0,0,0.5)"
+                                                    : "0 6px 14px rgba(0,0,0,0.12)",
                                         },
-                                    }}
+                                    })}
+
                                 >
                                     {t('Details')}
                                 </Link>

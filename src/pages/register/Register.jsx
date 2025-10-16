@@ -79,7 +79,7 @@ export default function Register() {
                         </Button>
                         <Box sx={{ display: "flex", justifyContent: "center" }}>
                             <Typography component={"p"} sx={{ mr: 1 }}>{t('already_have_acc?')} </Typography>
-                            <Link underline='none' sx={{ color: "#6862A0" }} component={RouterLink} to={'/login'}>{t('login')} </Link>
+                            <Link underline='none' sx={(theme) => ({ color: theme.palette.mode === 'dark'? '#a097efff':"#6862A0" })} component={RouterLink} to={'/login'}>{t('login')} </Link>
 
                         </Box>
                     </Grid>

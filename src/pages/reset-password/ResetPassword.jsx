@@ -63,7 +63,7 @@ export default function ResetPassword() {
                             px: 10,
                             height: '100%'
                         }}>
-                        <Typography component={"h1"} variant='h5' sx={{ color: "#312D5F", fontWeight: 800 }}>{t('step_2')}</Typography>
+                        <Typography component={"h1"} variant='h5' sx={(theme) => ({ color: theme.palette.mode === 'dark'? '#a097efff':"#6862A0" ,fontWeight: 800})}>{t('step_2')}</Typography>
                         <Typography component={"h1"} variant='h5' sx={{ fontWeight: 800 }}>{t('reset_pass')} </Typography>
                         <Typography component={"p"} sx={{ mt: 2 }} color='textSecondery'>{t('code_sent_to_email_to_reset')}</Typography>
 
@@ -79,7 +79,7 @@ export default function ResetPassword() {
                         </Button>
                         <Box sx={{ display: "flex", justifyContent: "center" }}>
                             <Typography component={"p"} sx={{ mr: 1 }}>{t('remembered_pass?')}</Typography>
-                            <Link underline='none' sx={{ color: "#6862A0" }} component={RouterLink} to={'/login'}>{t('login')}</Link>
+                            <Link underline='none' sx={(theme) => ({ color: theme.palette.mode === 'dark'? '#a097efff':"#6862A0" })} component={RouterLink} to={'/login'}>{t('login')}</Link>
 
                         </Box>
                     </Grid>

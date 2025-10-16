@@ -105,7 +105,12 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
     })
     const cartCount = cart?.data.items.length;
     return (
-        <AppBar position="static" sx={{ backgroundColor: "#4FC4CA" }}>
+        <AppBar position="static" sx={(theme) => ({
+            backgroundColor:
+                theme.palette.mode === 'dark'
+                    ? '#1B9CA4' 
+                    : '#4FC4CA', 
+        })}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <Typography

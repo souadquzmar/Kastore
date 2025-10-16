@@ -51,7 +51,7 @@ export default function ForgetPassword() {
                             my: 6,
                             px: 6
                         }}>
-                        <Typography component={"h1"} variant='h5' sx={{ color: "#312D5F", fontWeight: 800 }}>{t('step_1')}</Typography>
+                        <Typography component={"h1"} variant='h5' sx={(theme) => ({ color: theme.palette.mode === 'dark'? '#a097efff':"#6862A0" ,fontWeight: 800})}>{t('step_1')}</Typography>
                         <Typography component={"h1"} variant='h5' sx={{ fontWeight: 800 }}>{t('forget_pass')}</Typography>
                         <Typography component={"p"} sx={{ mt: 2 }} color='textSecondery'>{t('please_enter_email')}</Typography>
 
@@ -64,7 +64,7 @@ export default function ForgetPassword() {
                         </Button>
                         <Box sx={{ display: "flex", justifyContent: "center" }}>
                             <Typography component={"p"} sx={{ mr: 1 }}>{t('remembered_pass?')}</Typography>
-                            <Link underline='none' sx={{ color: "#6862A0" }} component={RouterLink} to={'/login'}> {t('login')}</Link>
+                            <Link underline='none' sx={(theme) => ({ color: theme.palette.mode === 'dark'? '#a097efff':"#6862A0"})} component={RouterLink} to={'/login'}> {t('login')}</Link>
 
                         </Box>
                     </Grid>

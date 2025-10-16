@@ -74,28 +74,28 @@ export default function Profile() {
 
         <ListItem  >
           <ListItemButton component={Link} to='/profile' >
-            <ListItemIcon sx={{ color: '#16123F' }}>
+            <ListItemIcon sx={(theme) => ({ color: theme.palette.mode === 'dark'? '#ffffff':'#16123F' })}>
               <PersonIcon />
             </ListItemIcon>
-            <ListItemText primary={t(`my_profile`)} sx={{ color: '#16123F' }} />
+            <ListItemText primary={t(`my_profile`)} ssx={(theme) => ({ color: theme.palette.mode === 'dark'? '#ffffff':'#16123F' })} />
           </ListItemButton>
         </ListItem>
 
         <ListItem  >
           <ListItemButton component={Link} to='orders'>
-            <ListItemIcon sx={{ color: '#16123F' }}>
+            <ListItemIcon sx={(theme) => ({ color: theme.palette.mode === 'dark'? '#ffffff':'#16123F' })}>
               <ShoppingBasketIcon />
             </ListItemIcon>
-            <ListItemText primary={t(`my_orders`)} sx={{ color: '#16123F' }} />
+            <ListItemText primary={t(`my_orders`)} sx={(theme) => ({ color: theme.palette.mode === 'dark'? '#ffffff':'#16123F' })} />
           </ListItemButton>
         </ListItem>
 
         <ListItem  >
           <ListItemButton>
-            <ListItemIcon sx={{ color: '#16123F' }}>
+            <ListItemIcon sx={(theme) => ({ color: theme.palette.mode === 'dark'? '#ffffff':'#16123F' })}>
               <SettingsIcon />
             </ListItemIcon >
-            <ListItemText primary={t(`settings`)} sx={{ color: '#16123F' }} />
+            <ListItemText primary={t(`settings`)} sx={(theme) => ({ color: theme.palette.mode === 'dark'? '#ffffff':'#16123F' })} />
           </ListItemButton>
         </ListItem>
       </List>
@@ -104,10 +104,10 @@ export default function Profile() {
 
         <ListItem  >
           <ListItemButton onClick={() => { handleLogout(); }}>
-            <ListItemIcon sx={{ color: '#16123F' }}>
+            <ListItemIcon sx={(theme) => ({ color: theme.palette.mode === 'dark'? '#ffffff':'#16123F' })}>
               <LogoutIcon />
             </ListItemIcon>
-            <ListItemText primary={t(`logout`)} sx={{ color: '#16123F' }} />
+            <ListItemText primary={t(`logout`)} sx={(theme) => ({ color: theme.palette.mode === 'dark'? '#ffffff':'#16123F' })} />
           </ListItemButton>
         </ListItem>
       </List>
@@ -121,10 +121,10 @@ export default function Profile() {
         <Drawer
           variant="permanent"
           open
-          sx={{
+          sx={(theme) => ({
             '& .MuiDrawer-paper': {
               position: 'relative',
-              backgroundColor: '#F2F2F2',
+              backgroundColor: theme.palette.mode === 'dark'? '#1E1E1E':'#F2F2F2',
               width: 280,
               padding: 2,
               borderRadius: '16px',
@@ -132,7 +132,7 @@ export default function Profile() {
               margin: 2,
               height: '70vh',
             },
-          }}
+          })}
         >
           {DrawerList}
         </Drawer>

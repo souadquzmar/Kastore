@@ -15,7 +15,7 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 export default function Cart() {
 
   const queryClient = useQueryClient();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   const fetchProducts = async () => {
     const response = await AxiosUserInstanse.get(`/Customer/Carts`);
@@ -46,7 +46,7 @@ export default function Cart() {
         });
         queryClient.invalidateQueries(['cartItems']);
       }
-      else{
+      else {
         toast.error(t('smth_wrong'), {
           position: "top-right",
           autoClose: 5000,
@@ -81,7 +81,7 @@ export default function Cart() {
         });
         queryClient.invalidateQueries(['cartItems']);
       }
-      else{
+      else {
         toast.error(t('smth_wrong'), {
           position: "top-right",
           autoClose: 5000,
@@ -137,28 +137,29 @@ export default function Cart() {
     );
   }
 
-  if(data.data.items.length === 0)
+  if (data.data.items.length === 0)
     return (
-  <Box  p={20}>
-    <Container sx={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',gap:2}}>
-      <ShoppingCartOutlinedIcon sx={{fontSize:60}} color='action'/>
-      <Typography component={'h2'} variant='h5' color='textSecondary'>{t('empty_cart')}</Typography>
-      <Typography component={'h3'} variant='h4' sx={{ color: 'text.secondary', opacity: 0.6 ,fontSize:'19px'}}>{t('fix_empty_cart')}</Typography>
-      <Button variant='contained' sx={{ backgroundColor: '#4fc4ca', color: '#312D5F' }} component={Link} to='/'>{t('shop_now')}</Button>
+      <Box p={20}>
+        <Container sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: 2 }}>
+          <ShoppingCartOutlinedIcon sx={{ fontSize: 60 }} color='action' />
+          <Typography component={'h2'} variant='h5' color='textSecondary'>{t('empty_cart')}</Typography>
+          <Typography component={'h3'} variant='h4' sx={{ color: 'text.secondary', opacity: 0.6, fontSize: '19px' }}>{t('fix_empty_cart')}</Typography>
+          <Button variant='contained' sx={{ backgroundColor: '#4fc4ca', color: '#312D5F' }} component={Link} to='/'>{t('shop_now')}</Button>
 
-    </Container>
-  </Box>
-  );
+        </Container>
+      </Box>
+    );
   return (
-    <Box  py={8}>
+    <Box py={8}>
       <Container>
         <Typography component={'h2'} variant='h5' sx={{ fontWeight: 700, pb: 2 }}>{t('Cart')}</Typography>
         {data.data.items.map((product) => (
 
-          <Card key={product.productId} sx={{
+          <Card key={product.productId} sx={(theme) => ({
             p: 2,
             boxShadow: 'none',
             borderBottom: '1px solid #d4d0d0ff',
+            borderBottomColor : theme.palette.mode === "dark" ? "#000000" : "#d4d0d0ff",
             display: 'flex',
             alignItems: 'flex-start',
             transition: "transform 0.3s, box-shadow 0.3s",
@@ -166,14 +167,14 @@ export default function Cart() {
               transform: "translateY(-6px)",
               boxShadow: "0 8px 20px rgba(0,0,0,0.2)",
             },
-          }} >
+          })} >
             <CardContent sx={{ flexGrow: 1 }}>
-              <Typography component={'h2'} variant='h6' sx={{ fontSize: '18px', color: '#4fc4ca', fontWeight: 800 }}>{product.productName}</Typography>
-              <Typography component={'h2'} variant='h6' sx={{ fontSize: '16px' }} color='textSecondary'>{t('Price')} : {product.price}$</Typography>
+              <Typography component={'h2'} variant='h6' sx={(theme) => ({ fontSize: '18px', color: theme.palette.mode === "dark" ? "#fffffff" : "#4fc4ca", fontWeight: 800 })}>{product.productName}</Typography>
+              <Typography component={'h2'} variant='h6' sx={{ fontSize: '16px' }} >{t('Price')} : {product.price}$</Typography>
               <Typography component={'h2'} variant='h' sx={{ fontSize: '20px' }}>{t('total_price')} : {product.totalPrice}$</Typography>
             </CardContent>
             <CardActions sx={{ display: 'flex', flexDirection: 'column', justifyContent: "flex-start", gap: 2 }}>
-              <Button sx={{gap:1}} startIcon={<DeleteIcon />} color='error' onClick={() => { removeItem(product.productId) }}>
+              <Button sx={{ gap: 1 }} startIcon={<DeleteIcon />} color='error' onClick={() => { removeItem(product.productId) }}>
                 {t('delete')}
               </Button>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, border: '1px solid rgba(219, 219, 219, 0.87)', borderRadius: 3 }}>
@@ -185,10 +186,10 @@ export default function Cart() {
           </Card>
 
         ))}
-        <Box sx={{ display: 'flex', alignItems: 'flex-end', py: 4 ,gap:2}}>
-          <Box sx={{flexGrow:1 , display:'flex' , flexDirection:'column' , gap:2}} >
+        <Box sx={{ display: 'flex', alignItems: 'flex-end', py: 4, gap: 2 }}>
+          <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: 2 }} >
             <Typography component={'h2'} variant='h' sx={{ fontSize: '20px' }}>{t('cart_total')} : {data.data.cartTotal}$</Typography>
-            <Button variant='contained' sx={{ backgroundColor: '#4fc4ca', color: '#312D5F', width: '100%' }} component={Link} to='/checkout'>{t('checkout')}</Button>
+            <Button variant='contained' sx={(theme) => ({ backgroundColor: theme.palette.mode === "dark" ? "#1B9CA4" : "#4fc4ca", color: '#312D5F', width: '100%' })} component={Link} to='/checkout'>{t('checkout')}</Button>
           </Box>
           <Button variant='outlined' color='error' onClick={() => { clearCart() }}>
             {t('clear_cart')}

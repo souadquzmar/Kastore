@@ -73,13 +73,13 @@ export default function Login() {
                         {serverError && (
                             <Alert severity="error">{serverError}</Alert>
                         )}
-                        <Link underline='none' sx={{ color: "#6862A0" }} component={RouterLink} to={'/forgetPassword'}>{t('forget_pass?')}</Link>
+                        <Link underline='none' sx={(theme) => ({ color: theme.palette.mode === 'dark'? '#a097efff':"#6862A0"})} component={RouterLink} to={'/forgetPassword'}>{t('forget_pass?')}</Link>
                         <Button variant="contained" type='submit' sx={{ background: "#4fc4ca", color: "#312D5F", borderRadius: 2 }} disabled={isLoading}>
                             {isLoading ? <CircularProgress /> : `${t('login')}`}
                         </Button>
                         <Box sx={{ display: "flex", justifyContent: "center" }}>
                             <Typography component={"p"} sx={{ mr: 1 }}>{t('dont_have_acc?')}</Typography>
-                            <Link underline='none' sx={{ color: "#6862A0" }} component={RouterLink} to={'/register'}>{t('create_acc')}</Link>
+                            <Link underline='none' sx={(theme) => ({ color: theme.palette.mode === 'dark'? '#a097efff':"#6862A0" })} component={RouterLink} to={'/register'}>{t('create_acc')}</Link>
 
                         </Box>
                     </Grid>

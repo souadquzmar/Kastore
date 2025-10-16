@@ -48,7 +48,14 @@ export default function Checkout() {
             <Container>
                 <Typography component={'h2'} variant='h5' sx={{ fontWeight: 700, pb: 2 }}>{t('Checkout')}</Typography>
                 <Box>
-                    <Box sx={{ backgroundColor: '#EDEDED', p: 4, border: '2px solid #b2b0b0ff', borderRadius: 5 }} >
+                    <Box sx={(theme) => ({
+                        backgroundColor: theme.palette.mode === 'dark' ? '#1E1E1E' : '#EDEDED',
+                        border: theme.palette.mode === 'dark'
+                            ? '2px solid #555'
+                            : '2px solid #b2b0b0ff',
+                        p: 4,
+                        borderRadius: 5,
+                    })} >
                         <Typography component={'h2'} variant='h6' sx={{ fontWeight: 700, pb: 2 }}>{t('summary')}</Typography>
                         {cartItems.map((product) => (
 
@@ -65,7 +72,7 @@ export default function Checkout() {
                                 <Typography component={'h2'} variant='h' sx={{ fontSize: '18px' }}>{product.totalPrice}$</Typography>
                             </Box>
                         ))}
-                        <Box sx={{ display: 'flex', alignItems: 'center' ,borderTop: '1px solid #b2b0b0ff'}}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', borderTop: '1px solid #b2b0b0ff' }}>
                             <Typography component={'h2'} variant='h' sx={{ fontSize: '20px', pt: 3, flexGrow: 1 }}>{t('cart_total')}</Typography>
                             <Typography component={'h2'} variant='h' sx={{ fontSize: '20px', pt: 3 }}>{data.data.cartTotal}$</Typography>
                         </Box>
@@ -82,25 +89,42 @@ export default function Checkout() {
 
                         <Controller control={control} name='paymentMethod' defaultValue={'Visa'}
                             render={({ field }) => (
-                                <Box sx={{ backgroundColor: '#e0f7fa', p: 4, border: '1px solid #00acc1', borderRadius: 5, mt: 3 }} >
-                                    <FormLabel> <Typography component={'h2'} variant='h6' sx={{ color: '#000', mb: 2 }}>{t('payment_method')}</Typography></FormLabel>
+                                <Box sx={(theme) => ({
+                                    backgroundColor: theme.palette.mode === 'dark' ? '#1E1E1E' : '#e0f7fa',
+                                    p: 4,
+                                    border: theme.palette.mode === 'dark'
+                                        ? '2px solid #555'
+                                        : '2px solid #00acc1',
+                                    borderRadius: 5, mt: 3
+                                })} >
+                                    <FormLabel> <Typography component={'h2'} variant='h6' sx={(theme) => ({ color: theme.palette.mode === 'dark' ? '#ffffff' : '#000000', mb: 2 })}>{t('payment_method')}</Typography></FormLabel>
                                     <RadioGroup {...field} row>
                                         <FormControlLabel
                                             value="Visa"
                                             control={<Radio sx={{ display: "none" }} />}
                                             label={
                                                 <Box
-                                                    sx={{
+                                                    sx={(theme) => ({
                                                         display: "flex",
                                                         alignItems: "center",
                                                         justifyContent: "space-between",
                                                         px: 4,
                                                         py: 1,
                                                         borderRadius: "12px",
-                                                        bgcolor: field.value === "Visa" ? "#b2ebf2" : "#e0f7fa",
-                                                        border: field.value === "Visa" ? "2px solid #00acc1" : "2px solid transparent",
+                                                        bgcolor:
+                                                            field.value === "Visa"
+                                                                ? theme.palette.mode === "dark"
+                                                                    ? "#1B9CA4" 
+                                                                    : "#b2ebf2" 
+                                                                : theme.palette.mode === "dark"
+                                                                    ? "#333" 
+                                                                    : "#e0f7fa", 
+                                                        border:
+                                                            field.value === "Visa"
+                                                                ? `2px solid ${theme.palette.mode === "dark" ? "#016370ff" : "#00acc1"}`
+                                                                : "2px solid transparent",
                                                         cursor: "pointer",
-                                                    }}
+                                                    })}
                                                 >
                                                     <Typography fontWeight="bold">{t("visa")}</Typography>
                                                     <Radio checked={field.value === "Visa"} value="Visa" />
@@ -112,17 +136,27 @@ export default function Checkout() {
                                             control={<Radio sx={{ display: "none" }} />}
                                             label={
                                                 <Box
-                                                    sx={{
+                                                    sx={(theme) => ({
                                                         display: "flex",
                                                         alignItems: "center",
                                                         justifyContent: "space-between",
                                                         px: 4,
                                                         py: 1,
                                                         borderRadius: "12px",
-                                                        bgcolor: field.value === "Cash" ? "#b2ebf2" : "#e0f7fa",
-                                                        border: field.value === "Cash" ? "2px solid #00acc1" : "2px solid transparent",
+                                                        bgcolor:
+                                                            field.value === "Cash"
+                                                                ? theme.palette.mode === "dark"
+                                                                    ? "#1B9CA4" 
+                                                                    : "#b2ebf2" 
+                                                                : theme.palette.mode === "dark"
+                                                                    ? "#333" 
+                                                                    : "#e0f7fa", 
+                                                        border:
+                                                            field.value === "Cash"
+                                                                ? `2px solid ${theme.palette.mode === "dark" ? "#016370ff" : "#00acc1"}`
+                                                                : "2px solid transparent",
                                                         cursor: "pointer",
-                                                    }}
+                                                    })}
                                                 >
                                                     <Typography fontWeight="bold">{t("cash")}</Typography>
                                                     <Radio checked={field.value === "Cash"} value="Cash" />
@@ -130,12 +164,12 @@ export default function Checkout() {
                                             }
                                         />
 
-    
+
                                     </RadioGroup>
                                 </Box>
                             )}
                         />
-                        <Button variant='contained' sx={{ backgroundColor: '#4fc4ca', color: '#312D5F', width: '100%' }} type='submit'>{t('pay')}</Button>
+                        <Button variant='contained' sx={(theme) => ({ backgroundColor: theme.palette.mode === 'dark'? '#1B9CA4':'#4fc4ca', color: '#312D5F', width: '100%' })} type='submit'>{t('pay')}</Button>
 
                     </Box>
                 </Box>
