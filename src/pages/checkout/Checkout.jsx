@@ -24,9 +24,16 @@ export default function Checkout() {
     const cartCount = data?.data.items.length;
     const cartItems = data?.data.items;
     const onSubmit = async (formData) => {
+        try{
         const response = await AxiosUserInstanse.post(`/Customer/CheckOut/payment`, {
             paymentMethod: formData.paymentMethod
         });
+        if(response.status === 200){
+            location.href = response.data.url;
+        }
+    } catch(error){
+        console.log(error);
+    }
     }
     if (isError) console.log(error);
 
